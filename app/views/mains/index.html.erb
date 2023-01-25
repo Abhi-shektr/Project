@@ -14,28 +14,24 @@
 	    </div>
     </div>
 </nav>
-
-
-<br>
-<table>
-  <tr>
-    <th>Name_|</th>
-    <th> </th>
-    <th>Description_|</th>
-    <th> </th>
-    <th>Price_</th>
-  </tr>
-<% @products.each do |product| %>
+<table class="table">
+  <thead>
+ 
     <tr>
-    
-      <td><%= product.name %></td>
-      <td> </td>
-      <td><%= product.desc %></td>
-      <td> </td>
-      <td><%= product.price %></td>
-      <td> </td>      
-      <td><%= link_to 'Show', product_path(product) %></td>
-	  <td><%= link_to 'Add to cart' ,login_users_path%></td> 
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
     </tr>
-  <% end %>
-</table> 
+  </thead>
+  <tbody>
+   <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.desc %></td>
+      <td><%= product.price %></td>     
+      <td><%= link_to 'Show', product_path(product) %></td>
+	  <td><%= link_to 'Add to cart' ,login_users_path%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

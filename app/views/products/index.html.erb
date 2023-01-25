@@ -7,31 +7,29 @@
 		</div>
 	</div>
 </nav>
-<br>
-<table>
-  <tr>
-    <th>Name_|</th>
-    <th> </th>
-    <th>Description_|</th>
-    <th> </th>
-    <th>Price_</th>
-  </tr>
-<% @products.each do |product| %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% @products.each do |product| %>
     <tr>
     
       <td><%= product.name %></td>
-      <td> </td>
       <td><%= product.desc %></td>
-      <td> </td>
-      <td><%= product.price %></td>
-      <td> </td>      
-      <td><%= link_to 'Show', product_path(product) %></td>
-      <td><%= link_to 'Update', edit_product_path(product) %></td>
+      <td><%= product.price %></td>    
+      <td><%= link_to 'Show', product_path(product) ,class:"btn btn-primary btn-sm"%></td>
+      <td><%= link_to 'Update', edit_product_path(product),class:"btn btn-primary btn-sm" %></td>
       <td><%= button_to  'remove', product_path(product),
               method: :delete,
-              data: { confirm: 'Are you sure?' } %></td> 
+              data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%></td> 
     </tr>
   <% end %>
+  </tbody>
 </table>
-<br>
-<%= link_to 'Back', seller_page_sellers_path %>
+
+<%= link_to 'Back', seller_page_sellers_path,class:"btn btn-primary btn-sm" %>

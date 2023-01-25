@@ -11,20 +11,22 @@
 			
   </div>
 </nav>
-
 <table>
-  <tr>
-    <th>Name_|</th>
-    <th> </th>
-    <th>Price_</th>
-  </tr>
-<% @cart.products.each do |product| %>
+<table class="table">
+  <thead>
     <tr>
-    
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+  </thead>
+  <tbody>
+     <% @cart.products.each do |product| %>
+    <tr>
       <td><%= product.name %></td>
-      <td> </td>
+      
       <td><%= product.price %></td>
-      <td> </td>      
+            
     </tr>
   <% end %>
-</table> 
+  </tbody>
+</table>
