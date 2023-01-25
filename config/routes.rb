@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  #devise_for :users
   root 'mains#index'
   get 'mains/user_page'
   resources :users do

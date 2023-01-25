@@ -16,8 +16,6 @@
   <tr>
     <th>Name_|</th>
     <th> </th>
-    <th>Description_|</th>
-    <th> </th>
     <th>Price_</th>
   </tr>
 <% @cart.products.each do |product| %>
@@ -25,12 +23,8 @@
     
       <td><%= product.name %></td>
       <td> </td>
-      <td><%= product.desc %></td>
-      <td> </td>
       <td><%= product.price %></td>
       <td> </td>      
-      <td><%= link_to 'Show', product_path(product) %></td>
-	  <td><%= link_to 'Add to cart' ,login_users_path%></td> 
     </tr>
   <% end %>
 </table> 

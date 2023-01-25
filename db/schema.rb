@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_24_180757) do
-  create_table "Carts_Products", id: false, force: :cascade do |t|
-    t.integer "Cart_id", null: false
-    t.integer "Product_id", null: false
-    t.index ["Cart_id", "Product_id"], name: "index_Carts_Products_on_cart_id_and_product_id"
-    t.index ["Product_id", "Cart_id"], name: "index_Carts_Products_on_product_id_and_cart_id"
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2023_01_25_054035) do
   create_table "carts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "carts_products", id: false, force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.index ["cart_id"], name: "index_carts_products_on_cart_id"
+    t.index ["product_id"], name: "index_carts_products_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|

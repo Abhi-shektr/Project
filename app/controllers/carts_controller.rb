@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
     def index
-        @cart=Cart.all        
+        @cart=Cart.find(params[:user_id])
     end
 
     def new
@@ -9,17 +9,23 @@ class CartsController < ApplicationController
     end
 
     def insert
+        #debugger
         
         @user=User.find(params[:user_id])
+        @product=Product.find(params[:product_id])
         if @user.cart.present?
-            @user.cart.product_ids=( :params[:product_id])
+            @user.cart.products << @product
         else
-            puts params
-            @cart=Cart.create(user_id :params[:id])
-            @user.cart.product_id=params[:product_id]
+            @cart=@user.create_cart(user_id: params[:user_id])
+           
+            @user.cart.products << @product
         
         end
-        redirect_to mains_user_page_path
+        redirect_to user_path(@user)
+    end
+
+    def show
+        @cart=Cart.find(params[:id])
     end
 
     def create
@@ -31,6 +37,6 @@ class CartsController < ApplicationController
     end
     private
     def cart_params
-        params.require(:cart).permit
+        params.require(:cart).permit(:user_id)
     end
 end

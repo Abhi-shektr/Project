@@ -14,7 +14,7 @@
 <%
 =end%>
                 <li class="r4"><%= link_to'Reviews'%></li>
-                <li class="r3"><%= link_to'MyCart',carts_path%></li>
+                <li class="r3"><%= link_to'MyCart'%></li>
                 <li class="r2"><%= link_to'Orders'%></li>
 				<li class="r1"><%= link_to'Profile'%></li>
 				
@@ -48,8 +48,7 @@
       <td> </td> 
 	  <td> </td>     
       <td><%= link_to 'Show', product_path(product) %></td>
-	  <td><%= link_to 'Add to cart', mains_user_page_path(:user_id => params[:id],:product_id => product.id) %></td> 
+	  <td><%= link_to 'Add to cart' %></td> 
     </tr>
   <% end %>
 </table>
-<%= link_to 'Go to cart' ,carts_path%>

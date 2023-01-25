@@ -56,9 +56,10 @@
       <td> </td> 
 	  <td> </td>     
       <td><%= link_to 'Show', product_path(product) %></td>
-	  <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => @user.id),:method => :post %></td> 
+	  <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => @user.id,:product_id => product.id),:method => :post %></td> 
     </tr>
   <% end %>
 
 </table>
+<%= link_to 'Go to cart' ,cart_path(@user.cart)%>
 
