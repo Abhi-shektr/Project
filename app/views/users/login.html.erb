@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default ">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<h7 class="navbar-brand" >
+					<b>User Login</b>
+			</h7>
+		</div>
+	</div>
+</nav>
+
+
+<div class="loginbox">
+    <%= form_with scope: :user, url: users_path ,local: true do |form| %>
+    <p>
+        <%= form.label :email %><br>
+        <%= form.text_field :email %>
+    </p>
+
+    <p>
+        <%= form.label :password %><br>
+        <%= form.text_area :password %>
+    </p>
+    <p>
+        <%= form.submit :submit%>
+    </p>
+    <% end %>
+    <%= link_to 'Login', mains_user_page_path %>
+</div>

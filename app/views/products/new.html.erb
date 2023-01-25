@@ -1,0 +1,21 @@
+<%= form_with scope: :product, url: products_path ,local: true do |form| %>
+  <p>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :Descripton %><br>
+    <%= form.text_area :desc %>
+  </p>
+
+  <p>
+    <%= form.label :Price %><br>
+    <%= form.text_area :price %>
+  </p>
+  
+  <%= hidden_field_tag :seller_id, @seller %>
+  <p>
+    <%= form.submit :submit %>
+  </p>
+<% end %>

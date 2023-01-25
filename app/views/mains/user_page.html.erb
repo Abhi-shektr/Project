@@ -1,0 +1,55 @@
+<nav class="navbar navbar-default ">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<h7 class="navbar-brand" >
+					<b>myStore</b>
+			</h7>
+		</div>
+			<ul class="nav navbar-nav">
+			    <li class="r6"><%= link_to'Home',mains_user_page_path,class:"active"%></li>
+				<li class="r0"><%= link_to'Users',users_path%></li>
+                <%
+=begin%>
+ <li class="r5"><%= link_to'Products'%></li> 
+<%
+=end%>
+                <li class="r4"><%= link_to'Reviews'%></li>
+                <li class="r3"><%= link_to'MyCart',carts_path%></li>
+                <li class="r2"><%= link_to'Orders'%></li>
+				<li class="r1"><%= link_to'Profile'%></li>
+				
+				
+			</ul>
+	    </div>
+</nav>
+
+<br>
+<table>
+  <tr>
+    <th>Name_|</th>
+    <th></th>
+	<th></th>
+    <th>Description_|</th>
+    <th></th>
+	<th></th>
+    <th>Price</th>
+	<th></th>
+  </tr>
+<% @products.each do |product| %>
+    <tr>
+    
+      <td><%= product.name %></td>
+      <td> </td>
+	  <td> </td>
+      <td><%= product.desc %></td>
+      <td> </td>
+	  <td> </td>
+      <td><%= product.price %></td>
+      <td> </td> 
+	  <td> </td>     
+      <td><%= link_to 'Show', product_path(product) %></td>
+	  <td><%= link_to 'Add to cart', mains_user_page_path(:user_id => params[:id],:product_id => product.id) %></td> 
+    </tr>
+  <% end %>
+</table>
+<%= link_to 'Go to cart' ,carts_path%>

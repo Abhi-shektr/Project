@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default ">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<h7 class="navbar-brand" >
+					<b>Users</b>
+			</h7>
+		</div>
+	    </div>
+    </div>
+</nav>
+<table>
+  <tr>
+    <th>Name__|</th>
+    <th> </th>
+    <th>Email___________|</th>
+    <th> </th>
+    <th>Phone______|</th>
+    <th> </th>
+    <th>Address</th>
+    <th> </th>
+  </tr>
+<% @users.each do |user| %>
+    <tr>
+      <td><%=user.name %></td>
+      <td> </td>
+      <td><%= user.email %></td>
+      <td> </td>
+      <td><%= user.phone %></td>
+      <td> </td>
+      <td><%= user.address %></td>
+      <td> </td>
+      <td><%= link_to 'Show', user_path(user) %></td>
+      
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,25 @@
+<h1>Edit Product Detils</h1>
+<%= form_with(model: @product, local: true) do |form| %>
+    <p>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :Description %><br>
+    <%= form.text_area :desc %>
+  </p>
+
+  <p>
+    <%= form.label :Price %><br>
+    <%= form.text_area :price %>
+  </p>
+
+  
+  <p>
+    <%= form.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', root_path %>

@@ -1,0 +1,37 @@
+<nav class="navbar navbar-default ">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<h7 class="navbar-brand" >
+					<b>Products</b>
+			</h7>
+		</div>
+	</div>
+</nav>
+<br>
+<table>
+  <tr>
+    <th>Name_|</th>
+    <th> </th>
+    <th>Description_|</th>
+    <th> </th>
+    <th>Price_</th>
+  </tr>
+<% @products.each do |product| %>
+    <tr>
+    
+      <td><%= product.name %></td>
+      <td> </td>
+      <td><%= product.desc %></td>
+      <td> </td>
+      <td><%= product.price %></td>
+      <td> </td>      
+      <td><%= link_to 'Show', product_path(product) %></td>
+      <td><%= link_to 'Update', edit_product_path(product) %></td>
+      <td><%= button_to  'remove', product_path(product),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %></td> 
+    </tr>
+  <% end %>
+</table>
+<br>
+<%= link_to 'Back', seller_page_sellers_path %>

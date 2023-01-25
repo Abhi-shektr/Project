@@ -1,0 +1,20 @@
+<%= form_with scope: :seller, url: sellers_path ,local: true do |form| %>
+  <p>
+    <%= form.label :Name %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :Phone %><br>
+    <%= form.text_area :phone %>
+  </p>
+
+  <p>
+    <%= form.label :Address %><br>
+    <%= form.text_area :address %>
+  </p>
+
+  <p>
+    <%= form.submit :submit%>
+  </p>
+<% end %>
