@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     def show
         @products=Product.all
         @user=User.find(params[:id])
+        @qty=1
         
     end
 

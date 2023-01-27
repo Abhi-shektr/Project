@@ -12,16 +12,21 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Description</th>
-      <th scope="col">Price</th>
+      <th scope="col">Price    </th>
+      <th scope="col">Image</th>
     </tr>
   </thead>
   <tbody>
      <% @products.each do |product| %>
     <tr>
     
+    
       <td><%= product.name %></td>
       <td><%= product.desc %></td>
-      <td><%= product.price %></td>    
+      <td><%= product.price %></td> 
+      <% if product.image.attached? %>
+        <td><%= image_tag(product.image, style: "height :100px")%></td>  
+        <% end %>
       <td><%= link_to 'Show', product_path(product) ,class:"btn btn-primary btn-sm"%></td>
       <td><%= link_to 'Update', edit_product_path(product),class:"btn btn-primary btn-sm" %></td>
       <td><%= button_to  'remove', product_path(product),

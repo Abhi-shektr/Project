@@ -11,9 +11,8 @@ class ProductsController < ApplicationController
 
     def create
         @seller=Seller.find(params[:seller_id])
-        
-        @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price])
-        
+        @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price],quantity: params[:product][:quantity],image: params[:product][:image])
+        @quantity=params[:product][:quantity]
         redirect_to seller_page_sellers_path        
     end
     
@@ -43,6 +42,6 @@ class ProductsController < ApplicationController
 
     private
     def product_params
-        params.require(:product).permit(:name, :desc, :price)
+        params.require(:product).permit(:name, :desc, :price, :quantity, :image)
     end
 end

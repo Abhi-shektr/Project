@@ -1,15 +1,19 @@
-<nav class="navbar navbar-default ">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<h7 class="navbar-brand" >
-					<b>myStore</b>
-			</h7>
-		</div>
-			<ul class="nav navbar-nav">
-                <li class="r4"><%= link_to'Home',root_path%></li>
-                <li class="r2"><%= link_to'New seller',new_seller_path%></li>
-				<li class="r1"><%= link_to'Login',seller_page_sellers_path%></li>
-			</ul>
-	    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">myStore</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
+          <li><%= link_to'Are you a seller?',sellers_path, class:"nav-link active"%></li>
+        <li ><%= link_to'SignUp',new_seller_path, class: "nav-link"%></li>
+        <li ><%= link_to'Login',seller_page_sellers_path, class: "nav-link"%></li>
+      </ul>
+      
     </div>
+  </div>
 </nav>

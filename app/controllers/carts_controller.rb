@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
     def index
-        @cart=Cart.find(params[:user_id])
+        @cart=Cart.all
     end
 
     def new
@@ -9,17 +9,21 @@ class CartsController < ApplicationController
     end
 
     def insert
-        #debugger
-        
+        puts params
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
-        if @user.cart.present?
-            @user.cart.products << @product
+        req_qty=params[:qty]
+        if req_qty>@product.quantity
+            flash[:notice] = "Not available"
         else
-            @cart=@user.create_cart(user_id: params[:user_id])
-           
-            @user.cart.products << @product
-        
+            if @user.cart.present?
+                @user.cart.products << @product
+            else
+                @cart=@user.create_cart(user_id: params[:user_id])
+            
+                @user.cart.products << @product
+            
+            end
         end
         redirect_to user_path(@user)
     end

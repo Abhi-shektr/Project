@@ -11,10 +11,21 @@
 
   <p>
     <%= form.label :Price %><br>
-    <%= form.text_area :price %>
+    <%= form.text_field :price %>
   </p>
-  
+
+  <p>
+    <%= form.label :Quantity %><br>
+    <%= form.number_field :quantity, in: 1..20, step: 1 %>
+  </p>
+
+   <p>
+    <%= form.label :Image %><br>
+    <%= form.file_field :image %>
+  </p>
+  <br>
   <%= hidden_field_tag :seller_id, @seller %>
+  <br>
   <p>
     <%= form.submit :submit %>
   </p>
