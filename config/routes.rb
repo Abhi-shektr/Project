@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  #devise_for :users
+  devise_for :sellers do
+    root :to => "sellers#index"
+  end
+  devise_for :users do
+    root :to => "mains#user_page"
+  end
   root 'mains#index'
   get 'mains/user_page'
   
@@ -15,6 +20,9 @@ Rails.application.routes.draw do
   end
   resources :products
   resources :carts do
+    post :delete, on: :collection
     post :insert, to: 'carts#insert', on: :collection
   end
+  resources :payments
+  resources :orders
 end

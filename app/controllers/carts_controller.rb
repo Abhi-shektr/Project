@@ -9,10 +9,10 @@ class CartsController < ApplicationController
     end
 
     def insert
-        puts params
+        debugger
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
-        req_qty=params[:qty]
+        req_qty=(params[:qty]).to_i
         if req_qty>@product.quantity
             flash[:notice] = "Not available"
         else
@@ -25,6 +25,7 @@ class CartsController < ApplicationController
             
             end
         end
+        flash[:notice] = "Item added"
         redirect_to user_path(@user)
     end
 
@@ -39,8 +40,18 @@ class CartsController < ApplicationController
     def update
         
     end
+
+    def delete
+        puts params
+        @cart=Cart.find(params[:cart_id])
+        @product=Product.find(params[:product_id])
+        @cart.products.delete(@product)
+    end
     private
     def cart_params
         params.require(:cart).permit(:user_id)
+    end
+    def user_params
+        params.require(:user).permit(:name, :email, :phone , :address)
     end
 end

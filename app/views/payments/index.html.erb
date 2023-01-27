@@ -8,11 +8,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
-        <li ><%= link_to'SignUp',new_seller_path, class: "nav-link"%></li>
-        <li ><%= link_to'Login',seller_page_sellers_path, class: "nav-link"%></li>
+          <li class="r4"><%= link_to'Home',mains_user_page_path,class: "nav-link" %></li>
+          <li><%= link_to'Users',users_path, class:"nav-link"%></li>
+        <li ><%= link_to'Orders',mains_user_page_path, class: "nav-link"%></li>
+        <li ><%= link_to'MyCart',carts_path, class: "nav-link active"%></li>
+        <li ><%= link_to'Profile',mains_user_page_path, class: "nav-link"%></li>
       </ul>
       
     </div>
   </div>
 </nav>
+
+<%= form_with scope: :payment, url: payments_path ,local: true do |form| %>
+  
+  
+    <%= form.submit :submit %>
+  </p>
+<% end %>

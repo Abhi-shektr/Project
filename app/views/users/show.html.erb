@@ -64,7 +64,6 @@
       </td>
       <td><%= form.submit :Update,class:"btn btn-secondary btn-sm" %></td>
       <%end%>
-      <%puts @qty%>
       <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
 	    <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => @user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-primary btn-sm" %></td> 
     </tr>
@@ -72,4 +71,8 @@
   </tbody>
 </table>
 
-<%= link_to 'Go to cart' ,cart_path(@user.cart),class:"btn btn-primary"%>
+<%
+=begin%>
+ <%= link_to 'Go to cart' ,cart_path(@user.cart),class:"btn btn-primary"%> 
+<%
+=end%>
