@@ -19,11 +19,14 @@ class SellersController < ApplicationController
 
     end
 
-    def seller_page
+    def seller_products
+        @sellers=Seller.all
     end
 
     def seller_list
-        @sellers=Seller.all
+        puts params
+        @seller=Seller.find(params[:id])
+        
     end
 
     def show

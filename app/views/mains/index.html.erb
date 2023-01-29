@@ -11,6 +11,9 @@
     <%= f.search_field :name_or_desc_i_cont_any, placeholder: "Search..." %>
     <%= f.submit "Search!" %>
     <% end %> 
+    <%= form_with model: @user do |f| %>
+  <%= f.search_field :name %>
+<% end %>
 <%
 =end%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,8 +24,21 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="r4"><%= link_to'Home',root_path,class: "nav-link active" %></li>
-          <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
-          <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
+          <%if user_signed_in?%>
+            
+            <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+          <%elsif seller_signed_in?%>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+          <%else%>
+            <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
+            <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
+            
+          <%end%>
       </ul>
       
       
@@ -42,9 +58,9 @@
 <% @products.each do |product| %>
   <% if product.quantity.present? %>
     <section style="background-color: #eee;">
-      <div class="container py-5">
+      <div class="container py-8">
         <div class="row justify-content-center mb-3">
-          <div class="col-md-12 col-xl-10">
+          <div class="col-md-4 col-xl-10">
             <div class="card shadow-0 border rounded-3">
               <div class="card-body">
                 <div class="row">
@@ -82,7 +98,7 @@
                         <h4 class="mb-1 me-1">₹<%= product.price %></h4>
                     </div>
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4">
+                    <div class="d-flex flex-column mt-2">
                         <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
                         <%= link_to 'Add to cart' ,login_users_path, class:"btn btn-success btn-sm mt-2"%>
                         
@@ -152,5 +168,7 @@
     </section>
   <% end %>
 <% end %>
+
+
 
 

@@ -22,12 +22,8 @@ class UsersController < ApplicationController
         @qty=0
         
     end
-
-    def login
-    end
-
     private
     def user_params
-        params.require(:user).permit(:name, :email, :phone , :address)
+        params.require(:user).permit(:name, :email, :phone)
     end
 end

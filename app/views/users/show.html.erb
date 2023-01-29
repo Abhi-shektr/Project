@@ -9,11 +9,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="r4"><%= link_to'Home',mains_user_page_path,class: "nav-link active" %></li>
-          <li><%= link_to'Users',users_path, class:"nav-link"%></li>
-        <li ><%= link_to'Orders',mains_user_page_path, class: "nav-link"%></li>
-        <li ><%= link_to'MyCart',mains_user_page_path, class: "nav-link"%></li>
-        <li ><%= link_to'Profile',mains_user_page_path, class: "nav-link"%></li>
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
+          <li><%= link_to'Products',products_path, class:"nav-link"%></li>
+        <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+        <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
+        <li ><%= link_to'Profile',user_path(current_user), class: "nav-link active"%></li>
       </ul>
       
     </div>
@@ -30,49 +30,10 @@
 </p>
 
 <p>
-  <strong>Address</strong>
-  <%= @user.address %>
-
-</p>
-<p>
-  <strong>user</strong>
-  <%= @user.id %>
-
+  <strong>Email</strong>
+  <%= @user.email %>
 </p>
 
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-      <th scope="col">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-     <% @products.each do |product| %>
-    <tr>
-      <td><%= product.name %></td>
-      
-      <td><%= product.desc %></td>
-      
-      <td><%= product.price %></td>
-
-      <td><%= form_with  do |form| %>
-          <%= form.number_field :@qty, in: 1..20, step: 1 %>
-      </td>
-      <td><%= form.submit :Update,class:"btn btn-secondary btn-sm" %></td>
-      <%end%>
-      <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
-	    <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => @user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-primary btn-sm" %></td> 
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<%
-=begin%>
- <%= link_to 'Go to cart' ,cart_path(@user.cart),class:"btn btn-primary"%> 
-<%
-=end%>
+<%= link_to  'Logout',destroy_user_session_path,
+                  method: :delete,class:"btn btn-danger btn-sm"%>

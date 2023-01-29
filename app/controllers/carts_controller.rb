@@ -9,28 +9,38 @@ class CartsController < ApplicationController
     end
 
     def insert
-        debugger
+
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
         req_qty=(params[:qty]).to_i
-        if req_qty>@product.quantity
-            flash[:notice] = "Not available"
+        if @user.cart.present?
+            @user.cart.products << @product
+            
         else
-            if @user.cart.present?
-                @user.cart.products << @product
-            else
-                @cart=@user.create_cart(user_id: params[:user_id])
-            
-                @user.cart.products << @product
-            
-            end
+            @cart=@user.create_cart(user_id: params[:user_id])
+            @user.cart.products << @product
+            flash[:notice] = "Item added"
+        
         end
-        flash[:notice] = "Item added"
-        redirect_to user_path(@user)
+        # if req_qty>@product.quantity
+        #     flash[:notice] = "Not available"
+        # else
+            
+        # end
+        
+        redirect_to products_path
     end
 
     def show
-        @cart=Cart.find(params[:id])
+        if seller_signed_in?
+            @seller=Seller.find(params[:id])
+        elsif user_signed_in?
+            @user=User.find(params[:id])
+            if @user.cart.present?
+                @cart=@user.cart
+            end
+        end
+        
     end
 
     def create
@@ -41,12 +51,13 @@ class CartsController < ApplicationController
         
     end
 
-    def delete
-        puts params
+    def destroy
         @cart=Cart.find(params[:cart_id])
-        @product=Product.find(params[:product_id])
+        @product=@cart.products.find(params[:id])
         @cart.products.delete(@product)
+        redirect_to cart_path(current_user)
     end
+
     private
     def cart_params
         params.require(:cart).permit(:user_id)
