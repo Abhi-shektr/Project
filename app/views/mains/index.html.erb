@@ -1,21 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
   <div class="container-fluid">
-
-  
-
-
-    <%
-=begin%>
- <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_desc_i_cont_any, placeholder: "Search..." %>
-    <%= f.submit "Search!" %>
-    <% end %> 
-    <%= form_with model: @user do |f| %>
-  <%= f.search_field :name %>
-<% end %>
-<%
-=end%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,7 +16,7 @@
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
             <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
           <%else%>
@@ -40,23 +25,16 @@
             
           <%end%>
       </ul>
-      
-      
     </div>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      
-      <form class="d-flex" role="search">
+    <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-success" type="submit">Search</button>
   </form>
-      
-    </div>
   </div>
 </nav>
 
-
-<% @products.each do |product| %>
-  <% if product.quantity.present? %>
+<% if user_signed_in? %>
+  <% @products.each do |product| %>
     <section style="background-color: #eee;">
       <div class="container py-8">
         <div class="row justify-content-center mb-3">
@@ -79,9 +57,12 @@
                   <div class="col-md-6 col-lg-6 col-xl-6">
                     <h5><strong><%= product.name %></strong></h5>
                     <div class="d-flex flex-row">
-                      <div class="text-success mb-1 me-2">
-                        <i class="fa fa-star">Available</i>
-                        <i class="fa fa-star"></i>
+                      <div class=" mb-1 me-2">
+                      <% if product.quantity >1 %>
+                        <i class="fa fa-star text-success">Available</i>
+                        <%else%>
+                        <i class="fa fa-star text-danger">Out of stock</i>
+                        <%end%>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                       </div>
@@ -89,9 +70,13 @@
                     <p class="text-truncate mb-4 mb-md-0">
                         <%= product.desc %>
                     </p>
-                    <p>Seller:
-                        <%= product.seller.name %>
-                    </p>
+                    <i>Seller:
+                        <%= product.seller.name %><br>
+                        <% if product.quantity >1 %>
+                      Quantity:
+                        <%= product.quantity %>
+                        <%end%>
+                    </i>
                   </div>
                   <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                     <div class="d-flex flex-row align-items-center mb-1">
@@ -111,11 +96,13 @@
           </div>
         </div>   
     </section>
-  <%else%>
+  <% end %>
+<%elsif seller_signed_in?%>
+  <% current_seller.products.each do |product| %>
     <section style="background-color: #eee;">
-      <div class="container py-5">
+      <div class="container py-8">
         <div class="row justify-content-center mb-3">
-          <div class="col-md-12 col-xl-10">
+          <div class="col-md-4 col-xl-10">
             <div class="card shadow-0 border rounded-3">
               <div class="card-body">
                 <div class="row">
@@ -134,9 +121,12 @@
                   <div class="col-md-6 col-lg-6 col-xl-6">
                     <h5><strong><%= product.name %></strong></h5>
                     <div class="d-flex flex-row">
-                      <div class="text-danger mb-1 me-2">
-                        <i class="fa fa-star">Out of stock</i>
-                        <i class="fa fa-star"></i>
+                      <div class=" mb-1 me-2">
+                      <% if product.quantity >1 %>
+                        <i class="fa fa-star text-success">Available</i>
+                        <%else%>
+                        <i class="fa fa-star text-danger">Out of stock</i>
+                        <%end%>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                       </div>
@@ -144,18 +134,22 @@
                     <p class="text-truncate mb-4 mb-md-0">
                         <%= product.desc %>
                     </p>
-                    <p>Seller:
-                        <%= product.seller.name %>
-                    </p>
+                    <i>Seller:
+                        <%= product.seller.name %><br>
+                        <% if product.quantity >1 %>
+                      Quantity:
+                        <%= product.quantity %>
+                        <%end%>
+                    </i>
                   </div>
                   <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                     <div class="d-flex flex-row align-items-center mb-1">
                         <h4 class="mb-1 me-1">₹<%= product.price %></h4>
                     </div>
                     <h6 class="text-success">Free shipping</h6>
-                    <div class="d-flex flex-column mt-4">
+                    <div class="d-flex flex-column mt-2">
                         <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
-                        <%= link_to 'Out of stock',root_path, class:"btn btn-danger btn-sm mt-2"%>
+                        <%= link_to 'Add to cart' ,login_users_path, class:"btn btn-success btn-sm mt-2"%>
                         
                     </div>
                     </div>
@@ -167,7 +161,72 @@
         </div>   
     </section>
   <% end %>
-<% end %>
+<% else %>
+  <% @products.each do |product| %>
+    <section style="background-color: #eee;">
+      <div class="container py-8">
+        <div class="row justify-content-center mb-3">
+          <div class="col-md-4 col-xl-10">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <% if product.image.attached? %>
+                          <%= image_tag(product.image, class: "image")%>
+                      <% end%>
+                      <a href="#!">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-6 col-xl-6">
+                    <h5><strong><%= product.name %></strong></h5>
+                    <div class="d-flex flex-row">
+                      <div class=" mb-1 me-2">
+                      <% if product.quantity >1 %>
+                        <i class="fa fa-star text-success">Available</i>
+                        <%else%>
+                        <i class="fa fa-star text-danger">Out of stock</i>
+                        <%end%>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </div>
+                    </div>
+                    <p class="text-truncate mb-4 mb-md-0">
+                        <%= product.desc %>
+                    </p>
+                    <i>Seller:
+                        <%= product.seller.name %><br>
+                        <% if product.quantity >1 %>
+                      Quantity:
+                        <%= product.quantity %>
+                        <%end%>
+                    </i>
+                  </div>
+                  <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <div class="d-flex flex-row align-items-center mb-1">
+                        <h4 class="mb-1 me-1">₹<%= product.price %></h4>
+                    </div>
+                    <h6 class="text-success">Free shipping</h6>
+                    <div class="d-flex flex-column mt-2">
+                        <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
+                        <%= link_to 'Add to cart' ,login_users_path, class:"btn btn-success btn-sm mt-2"%>
+                        
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>   
+    </section>
+  <% end %>
+<%end%>
+  
 
 
 

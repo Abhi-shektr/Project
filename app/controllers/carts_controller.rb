@@ -12,7 +12,6 @@ class CartsController < ApplicationController
 
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
-        req_qty=(params[:qty]).to_i
         if @user.cart.present?
             @user.cart.products << @product
             
@@ -22,11 +21,6 @@ class CartsController < ApplicationController
             flash[:notice] = "Item added"
         
         end
-        # if req_qty>@product.quantity
-        #     flash[:notice] = "Not available"
-        # else
-            
-        # end
         
         redirect_to products_path
     end
@@ -35,9 +29,20 @@ class CartsController < ApplicationController
         if seller_signed_in?
             @seller=Seller.find(params[:id])
         elsif user_signed_in?
-            @user=User.find(params[:id])
+            @user=current_user
+            @cart=current_user.cart
+            @qty=Hash.new()
+            @cart.products.each do |p|
+                @qty.store(p.id,1)
+            end 
+            session[:qty]=@qty
+            @total=0
             if @user.cart.present?
                 @cart=@user.cart
+                @products=@cart.products
+                @products.each do |p|
+                    @total+=p.price
+                end
             end
         end
         

@@ -30,6 +30,7 @@ class SellersController < ApplicationController
     end
 
     def show
+        @addresses=current_seller.address.all
         @seller=Seller.find(params[:id]) 
     end
     private

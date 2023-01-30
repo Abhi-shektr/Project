@@ -11,14 +11,14 @@
         <li class="r4"><%= link_to'Home',root_path,class: "nav-link" %></li>
         <li><%= link_to'Products',products_path, class:"nav-link"%></li>
         <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
-        <li ><%= link_to'MyCart',carts_path, class: "nav-link active"%></li>
+        <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link active"%></li>
         <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
       </ul>
       
     </div>
   </div>
 </nav>
-<%if @cart.present?%>
+<%if @cart.present? & @current_user.cart.products.present?%>
   <% @cart.products.each do |product| %>
     <section style="background-color: #eee;">
       <div class="container py-1">
@@ -42,11 +42,11 @@
                   <div class="col-md-6 col-lg-6 col-xl-6">
                     <h5><strong><%= product.name %></strong></h5>
                     <div class="d-flex flex-row">
-                      <div class="text-danger mb-1 me-2">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
+                      <div class="text mb-1 me-2">
+                        <div class="fa fa-star"></div>
+                        <div class="fa fa-star"></div>
+                        <div class="fa fa-star"></div>
+                        <div class="fa fa-star"></div>
                       </div>
                     </div>
                     <p class="text-truncate mb-4 mb-md-0">
@@ -55,13 +55,19 @@
                     <p>Seller:
                         <%= product.seller.name %>
                     </p>
+                    
                     <div class="d-flex flex-row align-items-center mb-1">
-                        <h4 class="mb-1 me-1">₹<%= product.price %></h4>
+                        <h4 class="mb-1 me-1 text-success">₹<%= product.price %></h4>
                     </div>
-                    <div class="">
-                          <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm mt-2" %>
+                      <%= form_with scope: :product, url: products_path do |form| %>
+                      <%= hidden_field_tag :product_id, product.id %>
+                      <%= form.number_field :quantity, in: 1..20, value: 1 %>
+                      <%= form.submit :Update,class:"btn btn-secondary btn-sm" %>
+                      <%end%>
+                    <div class="d-flex flex-row gap-2 col-6">
+                          <%= link_to 'Show', product_path(product), class:"btn btn-primary mt-2" %>
                           <%= button_to  'remove', cart_path(:id => product.id ,:cart_id => @cart.id),
-                                  method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm mt-2"%>   
+                                  method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger  mt-2"%>   
                       </div>
                   </div>
                 </div>
@@ -72,11 +78,11 @@
     </section>
   <%end%>
   <div class="d-grid gap-2 col-6 mx-auto">
-   <%= link_to 'Proceed', payments_path, class:"btn btn-success btn-sm mt-2  float-right" %>
-</div>
- 
-  
-
+   <p><strong>Cart total: ₹<%= @total%></strong></p>
+  </div>
+  <div class="d-grid gap-2 col-6 mx-auto">
+   <%= link_to 'Proceed', payments_path, class:"btn btn-success btn-sm mb-4 py-8  " %>
+  </div>
 <%else%>
   <div class="container-fluid  mt-100">
           <div class="row">

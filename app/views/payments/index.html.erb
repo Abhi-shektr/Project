@@ -7,13 +7,21 @@
     
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-          <li class="r4"><%= link_to'Home',mains_user_page_path,class: "nav-link" %></li>
-          <li><%= link_to'Users',users_path, class:"nav-link"%></li>
-        <li ><%= link_to'Orders',mains_user_page_path, class: "nav-link"%></li>
-        <li ><%= link_to'MyCart',carts_path, class: "nav-link active"%></li>
-        <li ><%= link_to'Profile',mains_user_page_path, class: "nav-link"%></li>
-      </ul>
+           <%if user_signed_in?%>
+            
+            <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+          <%elsif seller_signed_in?%>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+          <%else%>
+            <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
+            <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
+            
+          <%end%>
       
     </div>
   </div>
@@ -30,12 +38,12 @@
             <div>
              <% @products.each do |product| %>
               <div class="d-flex justify-content-between">
-                <span><%= product.name %></span><span>x<%= product.quantity%></span><span>₹<%= product.quantity*product.price%></span>
+                <span><%= product.name %></span><span>x<%= @qty["#{product.id}"]%></span><span>₹<%= @qty["#{product.id}"]*product.price%></span>
               </div>
               <%end%>
             </div>
             <div class="d-flex justify-content-between total font-weight-bold mt-4">
-              <span>Total</span><span>₹<%=@total%></span>
+              <span><strong>Grand Total</strong></span><span><strong>₹<%=@total%></strong></span>
             </div>
             <div class="d-flex justify-content-between total font-weight-bold mt-4">
               <span>Payment Mode</span></span><%= form_with scope: :payment, url: payments_path ,local: true do |form| %>
@@ -45,7 +53,7 @@
                         
             
             <div class="d-flex justify-content-between total font-weight-bold mt-4">
-              <%= link_to'Cancel',orders_path, class: "btn btn-danger"%>
+              <%= link_to'Cancel',products_path, class: "btn btn-danger"%>
               <%= form.submit :Order ,class: "btn btn-success"%>
             </div>
             <% end %>

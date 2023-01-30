@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
   devise_for :sellers do
     root :to => "sellers#index"
     end
@@ -23,4 +26,5 @@ Rails.application.routes.draw do
   end
   resources :payments
   resources :orders
+  resources :addresses
 end

@@ -1,4 +1,4 @@
-<h1>Edit Product Detils</h1>
+<h1>Edit Product Details</h1>
 <%= form_with(model: @product, local: true) do |form| %>
     <p>
     <%= form.label :Name %><br>
@@ -19,7 +19,7 @@
     <%= form.label :Quantity %><br>
     <%= form.number_field :quantity %>
   </p>
-  
+
   <p>
     <%= form.label :Image %><br>
     <%= form.file_field :image %>

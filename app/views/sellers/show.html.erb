@@ -31,7 +31,7 @@
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
             <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link active"%></li>
           <%else%>
@@ -59,9 +59,27 @@
 <p>
   <strong>Email</strong>
   <%= @seller.email %>
-
 </p>
- 
+
+<% if current_seller.address.present? %>
+  <% @addresses.each do |address| %>
+  <p>
+  <strong>Address</strong>
+  <%= address.house %>
+  <%= address.street %>
+  <%= address.city %>
+  <%= address.state %>
+  <%= button_to  'Remove address', addresses_path(address),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
+  </p>
+  
+  <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
+  
+  <%end%>
+<%else%>
+  <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>
+<%end%>
  <%= link_to  'Logout',destroy_seller_session_path,
                   method: :delete,class:"btn btn-danger btn-sm"%>
  
