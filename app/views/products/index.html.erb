@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="r4"><%= link_to'Home',root_path,class: "nav-link" %></li>
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
           <%if user_signed_in?%>
             
             <li><%= link_to'Products',products_path(current_user), class:"nav-link active"%></li>
@@ -16,8 +16,8 @@
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
-            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link active"%></li>
+            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
           <%else%>
             <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
@@ -48,7 +48,7 @@
         
         <td><%= product.desc %></td>
         
-        <td><%= product.price %></td>
+        <td>₹<%= product.price %></td>
 
         <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
         <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-primary btn-sm" %></td> 
@@ -61,7 +61,7 @@
         
         <td><%= product.desc %></td>
         
-        <td><%= product.price %></td>
+        <td>₹<%= product.price %></td>
         <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td> 
       </tr>
       <% end %>

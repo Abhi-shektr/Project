@@ -43,13 +43,14 @@
   <%= address.city %>
   <%= address.state %>
   <div class="d-flex flex-row gap-2 col-6">
-  <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
+  
   <%= button_to  'Remove', addresses_path(address),
               method: :delete,
               data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
   </div>
   </p>
   <%end%>
+  <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%else%>
   <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%end%>

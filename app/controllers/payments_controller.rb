@@ -13,39 +13,42 @@ class PaymentsController < ApplicationController
     end
 
     def create
-        @qty=session[:qty]
+        @qty=session[:qty]       
         if current_user.address.present?
             @user=current_user
             @products=@user.cart.products
             @total=0
             @products.each do |p|
                 @total+=p.price
-            end
-            @payment=@user.payments.new(total: @total, payment_mode: "Upi", status: "Not Paid")
-            if @payment.save
-                @qty=session[:qty]
-                @order=@user.orders.create(total: @total, payment_id: @payment.id)
-                @products.each do |p|
-                    @order_details=@order.order_details.create(quantity: @qty["#{p.id}"], product_id:p.id)
-                    @order.order_details << @order_details 
+                if (p.quantity - @qty["#{p.id}"])<0
+                    flash[:alert] = "not available"
+                    redirect_to cart_path(current_user) and return true
                 end
-                current_user.cart.products.each do |p|
+            end
+                @payment=@user.payments.new(total: @total, payment_mode: "Upi", status: "Paid")
+                if @payment.save
                     @qty=session[:qty]
-                    puts @qty
-                    @product=Product.find(p.id)
-                    @seller=@product.seller
-                    @updated_stock=@product.quantity - @qty["#{@product.id}"]
-                    puts @updated_stock
-                    @product.update(quantity: @updated_stock)
+                    @order=@user.orders.create(total: @total, payment_id: @payment.id)
+                    @products.each do |p|
+                        @order_details=@order.order_details.create(quantity: @qty["#{p.id}"], product_id:p.id)
+                        @order.order_details << @order_details 
+                    end
+                    current_user.cart.products.each do |p|
+                        @qty=session[:qty]
+                        @product=Product.find(p.id)
+                        @seller=@product.seller
+                        @updated_stock=@product.quantity - @qty["#{@product.id}"]
+                        @product.update(quantity: @updated_stock)
+                    end
+                    redirect_to orders_path
+                else
+                    render cart_path(current_user)
                 end
-                
-                redirect_to orders_path
-            else
-                render 'new'
-            end
+            
         else
             flash[:alert] = "Add address to continue"
             redirect_to user_path(current_user)
+            
         end
 
     end

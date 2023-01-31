@@ -5,7 +5,9 @@ class Seller < ApplicationRecord
          :recoverable, :rememberable, :validatable
     has_many :products
     has_many :address, as: :addressable
-    validates :name, :phone, presence: true
-    validates :name, length: {minimum: 2,maximum: 40, message: 'only letters allowed'}
-    validates :phone, numericality: true 
+    validates :name, presence: true
+    validates_format_of :name, :with => /\A[^0-9`!@#\$%\^&*+_=]+\z/
+    validates :phone,:presence => true,
+                 :numericality => true,
+                 :length => { :minimum => 10, :maximum => 15 }
 end

@@ -79,3 +79,8 @@ gem "cssbundling-rails", "~> 1.1"
 gem "jsbundling-rails", "~> 1.1"
 gem 'ransack'
 gem 'faker'
+gem 'activeadmin'
+gem 'sass-rails'
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'

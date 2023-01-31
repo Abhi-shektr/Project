@@ -16,7 +16,6 @@ class ProductsController < ApplicationController
             if current_seller.address.present?
                 @seller=Seller.find(params[:seller_id])
                 @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price],quantity: params[:product][:quantity],image: params[:product][:image])
-                flash[:notice]="Product added"
                 redirect_to seller_products_seller_path(current_seller) 
             else
                 flash[:alert]="Add address to continue"

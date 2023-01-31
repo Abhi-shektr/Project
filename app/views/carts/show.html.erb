@@ -18,7 +18,8 @@
     </div>
   </div>
 </nav>
-<%if @cart.present? & @current_user.cart.products.present?%>
+<%if current_user.cart.present? %>
+  <% if current_user.cart.products.present?%>
   <% @cart.products.each do |product| %>
     <section style="background-color: #eee;">
       <div class="container py-1">
@@ -77,6 +78,7 @@
         </div>   
     </section>
   <%end%>
+<%end%>
   <div class="d-grid gap-2 col-6 mx-auto">
    <p><strong>Cart total: ₹<%= @total%></strong></p>
   </div>

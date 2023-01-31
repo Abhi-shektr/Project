@@ -30,14 +30,14 @@ class CartsController < ApplicationController
             @seller=Seller.find(params[:id])
         elsif user_signed_in?
             @user=current_user
-            @cart=current_user.cart
-            @qty=Hash.new()
-            @cart.products.each do |p|
-                @qty.store(p.id,1)
-            end 
+            if @user.cart.present?
+                @cart=current_user.cart
+                @qty=Hash.new()
+                @cart.products.each do |p|
+                    @qty.store(p.id,1)
+                end 
             session[:qty]=@qty
             @total=0
-            if @user.cart.present?
                 @cart=@user.cart
                 @products=@cart.products
                 @products.each do |p|

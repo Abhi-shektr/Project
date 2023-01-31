@@ -38,7 +38,7 @@
             <div>
              <% @products.each do |product| %>
               <div class="d-flex justify-content-between">
-                <span><%= product.name %></span><span>x<%= @qty["#{product.id}"]%></span><span>₹<%= @qty["#{product.id}"]*product.price%></span>
+                <span><%= product.name %></span><span>₹<%= @qty["#{product.id}"]*product.price%>  (x<%= @qty["#{product.id}"]%>)</span>
               </div>
               <%end%>
             </div>

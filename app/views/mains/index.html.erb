@@ -72,10 +72,6 @@
                     </p>
                     <i>Seller:
                         <%= product.seller.name %><br>
-                        <% if product.quantity >1 %>
-                      Quantity:
-                        <%= product.quantity %>
-                        <%end%>
                     </i>
                   </div>
                   <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
@@ -85,7 +81,9 @@
                     <h6 class="text-success">Free shipping</h6>
                     <div class="d-flex flex-column mt-2">
                         <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
+                        <div class="d-flex flex-column mt-2">
                         <%= link_to 'Add to cart' ,login_users_path, class:"btn btn-success btn-sm mt-2"%>
+                    </div>
                         
                     </div>
                     </div>
@@ -149,8 +147,6 @@
                     <h6 class="text-success">Free shipping</h6>
                     <div class="d-flex flex-column mt-2">
                         <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
-                        <%= link_to 'Add to cart' ,login_users_path, class:"btn btn-success btn-sm mt-2"%>
-                        
                     </div>
                     </div>
                   </div>

@@ -1,4 +1,7 @@
 <%= form_with scope: :product, url: products_path ,local: true do |form| %>
+  <%if @product.errors.any?%>
+<h2>Errors:</h2>
+<%end%>
   <p>
     <%= form.label :Name %><br>
     <%= form.text_field :name %>
