@@ -52,13 +52,14 @@
                             </a>
                             </div>
                         </div>
-                        <div class=" col-md-6 col-lg-6 col-xl-6">
+                        <div class=" col-md-6 col-lg-6 col-xl-10">
                            
                             <% order.products.each do |product| %>
                                     <% if product.image.attached? %>
                                         <%= image_tag(product.image, class: "rounded-circle")%>
                                     <% end%>
-                            <h5><%=product.name%></h5>
+                            <h5><%=product.name%>(x<%p=product.order_details.where(order_id:order.id).first%><%=p.quantity%> piece)</h5> 
+
                             <div class="d-flex flex-row">
                             <div class="text-success mb-1 me-2">
                                 <div class="fa fa-star">₹<%=product.price%></div>

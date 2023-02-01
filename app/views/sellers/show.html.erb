@@ -1,21 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 <a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
   <div class="container-fluid">
-
-  
-
-
-    <%
-=begin%>
- <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_desc_i_cont_any, placeholder: "Search..." %>
-    <%= f.submit "Search!" %>
-    <% end %> 
-    <%= form_with model: @user do |f| %>
-  <%= f.search_field :name %>
-<% end %>
-<%
-=end%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -46,25 +31,22 @@
   </div>
 </nav>
 
-<p>
-  <strong>Name</strong>
-  <%= @seller.name %>
-</p>
+<div class="p-4 shadow-4 rounded-3" style="background-color: white;">
+  <h2><%= @seller.name %></h2>
+  <p>
+    <%= @seller.phone %>
+  </p>
 
-<p>
-  <strong>Phone</strong>
-  <%= @seller.phone %>
-</p>
+  <hr class="my-4" />
 
-<p>
-  <strong>Email</strong>
-  <%= @seller.email %>
-</p>
+  <p>
+    <%= @seller.email %>
+  </p>
 
 <% if current_seller.address.present? %>
   <% @addresses.each do |address| %>
   <p>
-  <strong>Address</strong>
+  <strong>Address:</strong>
   <%= address.house %>
   <%= address.street %>
   <%= address.city %>
@@ -79,10 +61,13 @@
   <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%end%>
  <%= link_to  'Logout',destroy_seller_session_path,
-                  method: :delete,class:"btn btn-danger btn-sm"%>
+                  method: :delete,class:"btn btn-primary btn-sm"%>
  
+</div>
 
- 
+ <% if alert %>
+    <p class="alert alert-danger mt-4"><%= alert %></p>
+  <% end %>
 
 
   

@@ -44,7 +44,7 @@
   <%= address.state %>
   <div class="d-flex flex-row gap-2 col-6">
   
-  <%= button_to  'Remove', addresses_path(address),
+  <%= button_to  'Remove', addresses_path(address.id),
               method: :delete,
               data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
   </div>
@@ -57,3 +57,7 @@
 
 <%= link_to  'Logout',destroy_user_session_path,
                   method: :delete,class:"btn btn-danger btn-sm"%>
+
+<% if alert %>
+    <p class="alert alert-danger mt-4"><%= alert %></p>
+  <% end %>

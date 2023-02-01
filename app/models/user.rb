@@ -9,9 +9,9 @@ class User < ApplicationRecord
          validates :phone,:presence => true,
                  :numericality => true,
                  :length => { :minimum => 10, :maximum => 15 }
-    has_one :cart
-    has_many :payments
-    has_many :orders
-    has_many :address, as: :addressable
+    has_one :cart, dependent: :destroy
+    has_many :payments, dependent: :destroy
+    has_many :orders, dependent: :destroy
+    has_many :address, as: :addressable, dependent: :destroy
 
 end

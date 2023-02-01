@@ -2,20 +2,6 @@
 <a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
   <div class="container-fluid">
 
-  
-
-
-    <%
-=begin%>
- <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_desc_i_cont_any, placeholder: "Search..." %>
-    <%= f.submit "Search!" %>
-    <% end %> 
-    <%= form_with model: @user do |f| %>
-  <%= f.search_field :name %>
-<% end %>
-<%
-=end%>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="r4"><%= link_to'Home',root_path,class: "nav-link active" %></li>
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link" %></li>
           <%if user_signed_in?%>
             
             <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>

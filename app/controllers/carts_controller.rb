@@ -16,7 +16,7 @@ class CartsController < ApplicationController
             @user.cart.products << @product
             
         else
-            @cart=@user.create_cart(user_id: params[:user_id])
+            @cart=@user.create_cart(user_id: params[:user_id],total: 0)
             @user.cart.products << @product
             flash[:notice] = "Item added"
         
@@ -26,24 +26,16 @@ class CartsController < ApplicationController
     end
 
     def show
+        
         if seller_signed_in?
             @seller=Seller.find(params[:id])
         elsif user_signed_in?
-            @user=current_user
-            if @user.cart.present?
-                @cart=current_user.cart
-                @qty=Hash.new()
-                @cart.products.each do |p|
-                    @qty.store(p.id,1)
-                end 
-            session[:qty]=@qty
+            @cart=current_user.cart
             @total=0
-                @cart=@user.cart
-                @products=@cart.products
-                @products.each do |p|
-                    @total+=p.price
-                end
+            @cart.products.each do |p|
+                @total=@total+(p.price*p.req_quantity)
             end
+            @cart.update(total: @total)
         end
         
     end
@@ -53,6 +45,7 @@ class CartsController < ApplicationController
     end
 
     def update
+        
         
     end
 
@@ -65,7 +58,7 @@ class CartsController < ApplicationController
 
     private
     def cart_params
-        params.require(:cart).permit(:user_id)
+        params.require(:cart).permit(:user_id, :quantity)
     end
     def user_params
         params.require(:user).permit(:name, :email, :phone , :address)
