@@ -20,7 +20,6 @@ class UsersController < ApplicationController
         @products=Product.all
         @user=User.find(params[:id])
         @addresses=current_user.address.all
-        @qty=0
         
     end
     private

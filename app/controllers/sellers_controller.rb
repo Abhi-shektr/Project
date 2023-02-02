@@ -23,16 +23,12 @@ class SellersController < ApplicationController
         @sellers=Seller.all
     end
 
-    def seller_list
-        puts params
-        @seller=Seller.find(params[:id])
-        
-    end
 
     def show
         @addresses=current_seller.address.all
         @seller=Seller.find(params[:id]) 
     end
+    
     private
     def seller_params
         params.require(:seller).permit(:name, :phone, :address)

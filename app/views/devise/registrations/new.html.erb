@@ -31,7 +31,7 @@
 
 
 
-<br><h2 style="width:50%; margin-left:435px; font-family:sans-serif;"><b>SIGN UP</b></h2><br>
+<br><h2 style="width:50%; margin-left:380px; font-family:serif;"><b>User SignUp</b></h2><br>
 
 <div  style="width:50%; margin-left:200px;margin-top:10px">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -58,6 +58,7 @@
         <%= f.submit :SignUp,class:"btn btn-success",style:"border: none;border-radius:5px;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 15px;margin-left:150px;margin-top:30px" %>
       </div>
     <% end %>
+  </div>
     <%= render "devise/shared/links" %>
-</div>
+
 

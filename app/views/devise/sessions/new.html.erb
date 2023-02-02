@@ -1,27 +1,59 @@
-<h2>Log in</h2>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link" %></li>
+          <%if user_signed_in?%>
+            
+            <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+          <%elsif seller_signed_in?%>
+            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+          <%else%>
+            <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
+            <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link active"%></li>
+            
+          <%end%>
+      </ul>
+    </div>
   </div>
+</nav>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+<br><h2 style="width:50%; margin-left:380px; font-family:serif;"><b>User LogIn</b></h2><br>
+<div  style="width:50%; margin-left:200px;margin-top:10px">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    
+    <div class="field form-group">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"form-control",placeholder:"Email" %>
+    </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <div class="field form-group">
+      <%= f.label :password %><br />
+      <%= f.password_field :password, autocomplete: "current-password",class:"form-control",placeholder:"Password" %>
+    </div>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field form-group">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+
+    <div class="actions">
+      <%= f.submit "Log in",class:"btn btn-success",style:"border: none;border-radius:5px;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 15px;margin-left:150px;margin-top:30px;" %>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
+</div>
 
 <%= render "devise/shared/links" %>

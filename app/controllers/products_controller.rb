@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
     def index
         @products=Product.all  
-        session[:quantity]=params[:quantity]
     end
 
     def new
@@ -11,6 +10,7 @@ class ProductsController < ApplicationController
     end
 
     def create
+        debugger
         if seller_signed_in?
             if current_seller.address.present?
                 @seller=Seller.find(params[:seller_id])
@@ -54,10 +54,10 @@ class ProductsController < ApplicationController
     end
 
     def destroy
-        
+        debugger
         @product=Product.find(params[:id])
         @product.destroy
-        redirect_to seller_products_seller_path(current_seller)
+        redirect_to seller_products_seller_path   
     end
 
 

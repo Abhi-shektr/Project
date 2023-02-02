@@ -13,7 +13,6 @@ class PaymentsController < ApplicationController
     end
 
     def create
-        puts current_user.cart.total       
         if current_user.address.present?
             @user=current_user
             @products=@user.cart.products
@@ -27,7 +26,7 @@ class PaymentsController < ApplicationController
                     redirect_to cart_path(current_user) and return true
                 end
             end
-                @payment=@user.payments.new(total: 0, payment_mode: "Upi", status: "Paid")
+                @payment=@user.payments.new(total: @user.cart.total, payment_mode: "Upi", status: "Paid")
                 if @payment.save
                     @order=@user.orders.create(total: @user.cart.total, payment_id: @payment.id)
                     @products.each do |p|

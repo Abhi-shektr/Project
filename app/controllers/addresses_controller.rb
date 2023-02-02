@@ -1,6 +1,8 @@
 class AddressesController < ApplicationController
+
     def new
         @address=Address.new
+        
     end
 
     def create
@@ -17,6 +19,7 @@ class AddressesController < ApplicationController
     end
 
     def destroy
+        debugger
         @address=Address.find(params[:id])
         @address.destroy
         if user_signed_in?

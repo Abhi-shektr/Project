@@ -29,4 +29,17 @@ Rails.application.routes.draw do
   resources :payments
   resources :orders
   resources :addresses
+
+  namespace :api do
+    namespace :v1 do
+      resources :carts do
+        post '/insert' =>'carts#insert', on: :collection
+      end
+      resources :payments
+      resources :orders
+      resources :products 
+      resources :users
+      resources :addresses
+    end
+  end
 end
