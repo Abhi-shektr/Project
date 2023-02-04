@@ -31,7 +31,7 @@
   </div>
 </nav>
 
-<div class="p-4 shadow-4 rounded-3" style="background-color: white;">
+<div class="p-4 shadow-4 rounded-3" style="background-color: white;font-family:serif;">
   <h2><%= @seller.name %></h2>
   <p>
     <%= @seller.phone %>
@@ -57,18 +57,16 @@
   </p>
   
   <%end%>
+  <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%else%>
   <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%end%>
  <%= link_to  'Logout',destroy_seller_session_path,
-                  method: :delete,class:"btn btn-primary btn-sm"%>
- 
-</div>
-
- <% if alert %>
+                  method: :delete,class:"btn btn-danger btn-sm"%>
+  <% if alert %>
     <p class="alert alert-danger mt-4"><%= alert %></p>
   <% end %>
-
+</div>
 
   
 

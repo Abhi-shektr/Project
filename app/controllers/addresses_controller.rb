@@ -2,7 +2,7 @@ class AddressesController < ApplicationController
 
     def new
         @address=Address.new
-        
+
     end
 
     def create
@@ -10,7 +10,13 @@ class AddressesController < ApplicationController
         if user_signed_in?
             @user=current_user
             @address=@user.address.create(house: params[:address][:house], street: params[:address][:street],city: params[:address][:city],state: params[:address][:state])
-            redirect_to user_path(current_user)
+            if @address.save
+                
+                redirect_to user_path(current_user)
+            else
+                flash[:alert]=@address.errors.full_messages
+                
+            end
         else
             @seller=current_seller
             @address=@seller.address.create(house: params[:address][:house], street: params[:address][:street],city: params[:address][:city],state: params[:address][:state])

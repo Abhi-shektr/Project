@@ -12,12 +12,14 @@ rescue_from ActiveRecord::RecordNotFound, with: :handle_error
         @product=Product.find(params[:product_id])
         if @user.cart.present?
             @user.cart.products << @product
+            render json: {message:"product added to cart",product: @product.as_json}
+            
             
         else
             @cart=@user.create_cart(user_id: params[:user_id],total: 0)
             @user.cart.products << @product
+            render json: {message:"Cart is created and product is added to cart",cart: @cart,product: @product.as_json}
         end
-        render json: {message:"item added to cart",product: @product.as_json}
     end
 
     def show

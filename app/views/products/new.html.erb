@@ -33,7 +33,23 @@
 
 <br>
 <div  style="width:50%; margin-left:200px;margin-top:50px">
-    <%= form_with scope: :product, url: products_path ,local: true do |form| %>
+
+<% if alert %>
+    <p class="alert alert-danger mt-4"><%= alert %></p>
+  <% end %>
+    
+    <%= form_with model: @product, url: products_path ,local: true do |form| %>
+    
+    <%if @product.errors.any?%>
+    <div>
+    <ul>
+      <% @product.errors.full_messages.each do |message|%>
+      <li><%= message%></li>
+      <%end%>
+    </ul>
+    </div>
+    <%end%>
+
       <div class="field form-group">
         <%= form.text_field :name,class:"form-control",placeholder:"Name"%><br>
       </div>

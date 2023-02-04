@@ -1,5 +1,7 @@
 class Api::V1::UsersController < ActionController::API
     rescue_from ActiveRecord::RecordNotFound, with: :handle_error
+    doorkeeper_for :all
+    before_action :doorkeeper_authorize!
 
     def index
         @users=User.all
@@ -21,6 +23,7 @@ class Api::V1::UsersController < ActionController::API
         end
     end
 
+
     def show
         @user=User.find(params[:id])
         @addresses=@user.address.all
@@ -34,4 +37,7 @@ class Api::V1::UsersController < ActionController::API
     def handle_error(error)
         render json: {error:error.message}, status: :not_found
     end
+    def current_user
+        @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id])
+      end
 end

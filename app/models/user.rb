@@ -14,4 +14,13 @@ class User < ApplicationRecord
     has_many :orders, dependent: :destroy
     has_many :address, as: :addressable, dependent: :destroy
 
+    validates :email, format: URI::MailTo::EMAIL_REGEXP
+    
+    def self.authenticate(email, password)
+      user = User.find_for_authentication(email: email)
+      user&.valid_password?(password) ? user : nil
+    end
+
+    
+
 end

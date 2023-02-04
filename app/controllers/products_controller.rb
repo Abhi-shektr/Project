@@ -10,15 +10,18 @@ class ProductsController < ApplicationController
     end
 
     def create
-        debugger
+        
         if seller_signed_in?
             if current_seller.address.present?
-                @seller=Seller.find(params[:seller_id])
+                @seller=current_seller
                 @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price],quantity: params[:product][:quantity],image: params[:product][:image],req_quantity: 1)
                 if @product.save
+                    
                     redirect_to seller_products_seller_path(current_seller) 
                 else
-                    render 'new'
+                    debugger
+                    flash[:alert]=@product.errors.full_messages
+                    render new_product_path
                 end
             else
                 flash[:alert]="Add address to continue"
@@ -52,9 +55,15 @@ class ProductsController < ApplicationController
         end
         
     end
+    def search 
+        debugger
+        @products=Product.where("name LIKE?","%#{params[:q]}%")
+        
+    end
+
+    
 
     def destroy
-        debugger
         @product=Product.find(params[:id])
         @product.destroy
         redirect_to seller_products_seller_path   

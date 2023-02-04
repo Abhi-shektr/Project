@@ -19,7 +19,6 @@ class CartsController < ApplicationController
             @cart=@user.create_cart(user_id: params[:user_id],total: 0)
             @user.cart.products << @product
         end
-
         flash[:notice] = "Item added"
         
         redirect_to products_path

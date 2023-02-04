@@ -21,16 +21,16 @@ class Api::V1::ProductsController < ActionController::API
                 else
                     render json: {message: "Product not created"}
                 end
-            #else
-                #render json: {message: "Add address before adding product"}
-            #end 
+            else
+                render json: {message: "Add address before adding product"}
+            end 
             # @total=0
             # @cart=current_user.cart
             # @product=Product.find(params[:product_id])
             # @product.update(req_quantity:(params[:product][:quantity]))
             # render json: {product: @product}
 
-         end
+        #  end
      
     end
     

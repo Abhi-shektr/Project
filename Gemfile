@@ -84,3 +84,5 @@ gem 'sass-rails'
 gem 'cancancan'
 gem 'draper'
 gem 'pundit'
+
+gem "doorkeeper", "~> 5.6"

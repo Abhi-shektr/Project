@@ -16,7 +16,7 @@
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
             <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
           <%else%>
@@ -26,12 +26,19 @@
           <%end%>
       </ul>
     </div>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-success" type="submit">Search</button>
-  </form>
+      <%= form_tag search_path method: :get do%>
+      <%= text_field_tag :q, params[:q]%>
+      <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
+      <%end%>
   </div>
-</nav>
+  </nav>
+  <%
+=begin%>
+ <%@products.each do|product|%>
+      <h2><%=product.name%></h2>
+      <%end%> 
+<%
+=end%>
 
 
 <div style="margin-top:30px">

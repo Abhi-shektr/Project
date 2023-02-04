@@ -113,6 +113,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    doorkeeper (5.6.4)
+      railties (>= 5)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -310,6 +312,7 @@ DEPENDENCIES
   cssbundling-rails (~> 1.1)
   debug
   devise
+  doorkeeper (~> 5.6)
   draper
   faker
   importmap-rails
