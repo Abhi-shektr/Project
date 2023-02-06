@@ -14,11 +14,11 @@
             <li><%= link_to'Products',products_path(current_user), class:"nav-link active"%></li>
             <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
-            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link "%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
-            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
-            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link active"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link "%></li>
           <%else%>
             <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
             <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
@@ -26,46 +26,72 @@
           <%end%>
       </ul>
     </div>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-success" type="submit">Search</button>
-  </form>
+    <%= form_tag root_path, method: :get do%>
+      <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
+      <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
+      <%end%>
   </div>
-</nav>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Price</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%if user_signed_in? %>
-      <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name %></td>
-        
-        <td><%= product.desc %></td>
-        
-        <td>₹<%= product.price %></td>
+  </nav>
 
-        <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
-        <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id),:method => :post,class:"btn btn-primary btn-sm"%></td> 
+
+<%if user_signed_in?%>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
       </tr>
-    <% end %>
-    <%else%>
+    </thead>
+    <tbody>
+        <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          
+          <td><%= product.desc %></td>
+          
+          <td>₹<%= product.price %></td>
+
+          <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
+          <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id),:method => :post,class:"btn btn-primary btn-sm"%></td> 
+        </tr>
+        <%end%>
+    </tbody>
+  </table>
+  <%= link_to 'Go to Cart', cart_path(current_user),class:"btn btn-success btn-sm" %>
+<%else%>
+  <table class="table", style="font-family:serif;">
+    <thead>
+      <tr>
+        <th scope="col">  </th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Price    </th>
+        <th scope="col">  </th>
+        <th scope="col">  </th>
+        <th scope="col">  </th>
+      </tr>
+    </thead>
+    <tbody>
       <% current_seller.products.each do |product| %>
       <tr>
+          <% if product.image.attached? %>
+              <td><%= image_tag(product.image, class:"image")%></td>  
+          <% end %>
         <td><%= product.name %></td>
-        
         <td><%= product.desc %></td>
+        <td><%= product.quantity %></td>
+        <td>₹<%= product.price %></td> 
         
-        <td>₹<%= product.price %></td>
-        <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td> 
+        <td><%= link_to 'Show', product_path(product) ,class:"btn btn-primary btn-sm"%></td>
+        <td><%= link_to 'Update', edit_product_path(product),class:"btn btn-primary btn-sm" %></td>
+        <td><%= button_to  'remove', product_path(product),
+                method: :delete,
+                data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%></td> 
       </tr>
-      <% end %>
     <% end %>
-  </tbody>
-</table>
-<%= link_to 'Go to Cart', cart_path(current_user),class:"btn btn-success btn-sm" %>
+    </tbody>
+  </table>
+  <%=link_to 'Add new Product', new_product_path(:seller_id => params[:id]),class: "btn btn-primary" %>
+<%end%>

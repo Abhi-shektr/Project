@@ -8,16 +8,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="r4"><%= link_to'Home',root_path,class: "nav-link active" %></li>
+          <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
           <%if user_signed_in?%>
             
             <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
             <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
-            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link "%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
-            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link active"%></li>
           <%else%>
             <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
@@ -25,12 +25,11 @@
             
           <%end%>
       </ul>
-      
-      
     </div>
   </div>
-</nav>
+  </nav>
 
+  
 <div class="p-4 shadow-4 rounded-3" style="background-color: white;font-family:serif;">
   <h2><%= @seller.name %></h2>
   <p>
@@ -43,20 +42,23 @@
     <%= @seller.email %>
   </p>
 
-<% if current_seller.address.present? %>
+<% if @seller.address.present? %>
+<strong>Address:</strong>
   <% @addresses.each do |address| %>
+  <div class="d-flex flex-row col-3">
   <p>
-  <strong>Address:</strong>
+  
   <%= address.house %>
   <%= address.street %>
   <%= address.city %>
   <%= address.state %>
-  <%= button_to  'Remove address', addresses_path(address),
+  <%= button_to  'Remove', addresses_path(address),
               method: :delete,
               data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
-  </p>
-  
+  </p>  
+  </div>
   <%end%>
+  
   <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%else%>
   <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>

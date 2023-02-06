@@ -17,7 +17,7 @@
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
           <%elsif seller_signed_in?%>
             <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
-            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link"%></li>
             <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
           <%else%>
             <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
@@ -26,19 +26,12 @@
           <%end%>
       </ul>
     </div>
-      <%= form_tag search_path method: :get do%>
-      <%= text_field_tag :q, params[:q]%>
+      <%= form_tag root_path, method: :get do%>
+      <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
       <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
       <%end%>
   </div>
   </nav>
-  <%
-=begin%>
- <%@products.each do|product|%>
-      <h2><%=product.name%></h2>
-      <%end%> 
-<%
-=end%>
 
 
 <div style="margin-top:30px">
@@ -206,11 +199,6 @@
                     <i>Seller:
                         <%= product.seller.name %><br>
                         <% if product.quantity >0 %>
-                      <%
-=begin%>
- Quantity: 
-<%
-=end%>
                         <% product.quantity %>
                         <%end%>
                     </i>

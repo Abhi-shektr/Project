@@ -42,7 +42,12 @@ Rails.application.routes.draw do
       resources :carts do
         post '/insert' =>'carts#insert', on: :collection
       end
-      resources :payments
+      resources :payments do
+        get '/user_payments' =>'payments#user_payments', on: :collection
+      end
+      resources :sellers do
+      get '/total' =>'sellers#total', on: :collection
+    end
       resources :orders do
         get '/order_count' =>'orders#order_count', on: :collection
       end

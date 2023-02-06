@@ -1,6 +1,8 @@
 class Api::V1::UsersController < ActionController::API
-    rescue_from ActiveRecord::RecordNotFound, with: :handle_error
-    doorkeeper_for :all
+    rescue_from StandardError, with: :error_500
+    rescue_from ActiveRecord::RecordNotFound, with: :error_404
+    rescue_from ActionController::ParameterMissing, with: :error_400
+    before_action :authenticate_request
     before_action :doorkeeper_authorize!
 
     def index
@@ -14,8 +16,7 @@ class Api::V1::UsersController < ActionController::API
     end
 
     def create
-        debugger
-        @user=User.new(user_params)
+        @user=User.new(user_params)        
         if @user.save
             render json: {user: @user}
         else
@@ -30,14 +31,43 @@ class Api::V1::UsersController < ActionController::API
         render json: {user:@user,addresses:@addresses}
     end
 
+    def update
+        @user=User.find(params[:id])
+        if @user.update(user_params)
+            render json: {message:"User updated",user: @user}
+        else
+            render json: {message: "User not updated"}
+        end
+        
+    end
+
+
+    def destroy
+        @user=User.find(params[:id])
+        @user.destroy
+        render json: {message: "user deleted",user: @user}
+    end
+
+    
     private
     def user_params
-        params.permit(:name, :email, :phone)
+        params.permit(:name, :email, :phone, :password)
     end
-    def handle_error(error)
-        render json: {error:error.message}, status: :not_found
+    
+    def authenticate_request
+        bearer_token=request.headers["Authorization"]
+        render json:{message:"Authorization token is missing"},status: :unauthorized unless bearer_token.present?
     end
-    def current_user
-        @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id])
-      end
+
+    def error_404(error)
+        render json: {message:error.message}, status: :not_found
+    end
+
+    def error_400(error)
+        render json: {message:error.message}, status: :bad_request
+    end
+
+    def error_500(error)
+        render json: {message:error.message}, status: :internal_server_error
+    end
 end

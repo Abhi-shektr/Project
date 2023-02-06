@@ -2,11 +2,9 @@ ActiveAdmin.register Address do
   permit_params :id, :addressable_type, :addressable_id, :house, :street, :city, :state 
   config.clear_action_items!
   actions :all, except: [:edit, :destroy]
+  
   scope :all
-  scope :user, :default => true do |address|
-    Address.user
-  end
-
+  
   scope :user, :default => true do |address|
     Address.user
   end
@@ -16,6 +14,8 @@ ActiveAdmin.register Address do
   
 
   filter :id
+  filter :addressable_of_User_type_name, as: :string
+  filter :addressable_of_Seller_type_name, as: :string
   filter :house
   filter :street
   filter :city
@@ -33,19 +33,10 @@ ActiveAdmin.register Address do
     column :created_at
     column :updated_at
   end
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :addressable_type, :addressable_id, :house, :street, :city, :state
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:addressable_type, :addressable_id, :house, :street, :city, :state]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
+
+  # controller do
+  #   def scoped_collection
+  #     end_of_association_chain.instance_exec(params,&association_chain)
+  #   end
   # end
-  
 end

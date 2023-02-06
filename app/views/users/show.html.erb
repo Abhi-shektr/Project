@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">myStore</a>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,54 +9,65 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
           <li class="r4"><%= link_to'Home',root_path,class: "nav-link " %></li>
-          <li><%= link_to'Products',products_path, class:"nav-link"%></li>
-        <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
-        <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
-        <li ><%= link_to'Profile',user_path(current_user), class: "nav-link active"%></li>
+          <%if user_signed_in?%>
+            
+            <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link active"%></li>
+          <%elsif seller_signed_in?%>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+          <%else%>
+            <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
+            <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
+            
+          <%end%>
       </ul>
-      
     </div>
   </div>
-</nav>
-<p>
-  <strong>Name</strong>
-  <%= @user.name %>
-</p>
+  </nav>
 
-<p>
-  <strong>Phone</strong>
-  <%= @user.phone %>
-</p>
 
-<p>
-  <strong>Email</strong>
-  <%= @user.email %>
-</p>
+
+  
+<div class="p-4 shadow-4 rounded-3" style="background-color: white;font-family:serif;">
+  <h2><%= @user.name %></h2>
+  <p>
+    <%= @user.phone %>
+  </p>
+
+  <hr class="my-4" />
+
+  <p>
+    <%= @user.email %>
+  </p>
 
 <% if current_user.address.present? %>
+<strong>Address:</strong>
   <% @addresses.each do |address| %>
+  <div class="d-flex flex-row col-3">
   <p>
-  <strong>Address</strong>
+  
   <%= address.house %>
   <%= address.street %>
   <%= address.city %>
   <%= address.state %>
-  <div class="d-flex flex-row gap-2 col-6">
-  
-  <%= button_to  'Remove', address_path(address),
+  <%= button_to  'Remove', addresses_path(address),
               method: :delete,
               data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
+  </p>  
   </div>
-  </p>
   <%end%>
+  
   <%= link_to  'Add new address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%else%>
   <%= link_to  'Add address', new_address_path,class:"btn btn-primary btn-sm"%>
 <%end%>
-
-<%= link_to  'Logout',destroy_user_session_path,
+ <%= link_to  'Logout',destroy_user_session_path,
                   method: :delete,class:"btn btn-danger btn-sm"%>
-
-<% if alert %>
+  <% if alert %>
     <p class="alert alert-danger mt-4"><%= alert %></p>
   <% end %>
+</div>

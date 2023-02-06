@@ -1,5 +1,10 @@
 class Api::V1::ProductsController < ActionController::API
-    rescue_from ActiveRecord::RecordNotFound, with: :handle_error
+    rescue_from StandardError, with: :error_500
+    rescue_from ActiveRecord::RecordNotFound, with: :error_404
+    rescue_from ActionController::ParameterMissing, with: :error_400
+    before_action :authenticate_request
+    before_action :doorkeeper_authorize!
+    
     def index
         @products=Product.all  
         render json: {Products: @products}
@@ -24,17 +29,10 @@ class Api::V1::ProductsController < ActionController::API
             else
                 render json: {message: "Add address before adding product"}
             end 
-            # @total=0
-            # @cart=current_user.cart
-            # @product=Product.find(params[:product_id])
-            # @product.update(req_quantity:(params[:product][:quantity]))
-            # render json: {product: @product}
-
-        #  end
-     
     end
     
     def show
+
         @product=Product.find(params[:id])
         render json: {product: @product}
     end
@@ -63,10 +61,23 @@ class Api::V1::ProductsController < ActionController::API
 
     private
     def product_params
-        params.require(:product).permit(:name, :desc, :price, :quantity, :image, :req_quantity)
+        params.permit(:name, :desc, :price, :quantity, :image, :req_quantity)
     end
 
-    def handle_error(error)
-        render json: {error:error.message}, status: :not_found
+    def authenticate_request
+        bearer_token=request.headers["Authorization"]
+        render json:{message:"Authorization token is missing"},status: :unauthorized unless bearer_token.present?
+    end
+
+    def error_404(error)
+        render json: {message:error.message}, status: :not_found
+    end
+
+    def error_400(error)
+        render json: {message:error.message}, status: :bad_request
+    end
+
+    def error_500(error)
+        render json: {message:error.message}, status: :internal_server_error
     end
 end

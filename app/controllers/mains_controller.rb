@@ -1,6 +1,10 @@
 class MainsController < ApplicationController
     def index
-        @products=Product.all
+        if params[:q].present?
+            @products=Product.where("name LIKE?","%#{params[:q]}%")
+        else
+            @products=Product.all
+        end
     end
 
     

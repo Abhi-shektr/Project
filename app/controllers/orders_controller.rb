@@ -3,9 +3,11 @@ class OrdersController < ApplicationController
         if user_signed_in?
             @user=current_user
             @orders=@user.orders.all
-            @cart=@user.cart            
+                    
         else
             @seller=current_seller
+            @products=@seller.products.all
+            
         end
     end
 end

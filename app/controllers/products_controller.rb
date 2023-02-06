@@ -1,6 +1,16 @@
 class ProductsController < ApplicationController
     def index
-        @products=Product.all  
+        if params[:q].present?
+            @products=Product.where("name LIKE?","%#{params[:q]}%")
+            if seller_signed_in?
+                @sellers=Seller.all
+            end
+        else
+            @products=Product.all
+            if seller_signed_in?
+                @sellers=Seller.all
+            end
+        end 
     end
 
     def new
@@ -19,9 +29,7 @@ class ProductsController < ApplicationController
                     
                     redirect_to seller_products_seller_path(current_seller) 
                 else
-                    debugger
-                    flash[:alert]=@product.errors.full_messages
-                    render new_product_path
+                    render 'new'
                 end
             else
                 flash[:alert]="Add address to continue"
@@ -47,20 +55,15 @@ class ProductsController < ApplicationController
     end
 
     def update
+        debugger
         @product=Product.find(params[:id])
         if @product.update(product_params)
-            redirect_to seller_products_seller_path(current_seller)
+            redirect_to products_path
         else
             render 'new'
         end
         
     end
-    def search 
-        debugger
-        @products=Product.where("name LIKE?","%#{params[:q]}%")
-        
-    end
-
     
 
     def destroy

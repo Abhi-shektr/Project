@@ -33,8 +33,10 @@ class PaymentsController < ApplicationController
                         @order_details=@order.order_details.create(quantity: p.req_quantity, product_id:p.id)
                         @order.order_details << @order_details 
                     end
+
                     current_user.cart.products.each do |p|
                         p.quantity=p.quantity - p.req_quantity
+                        p.update(req_quantity:1)
                     end
                     redirect_to orders_path
                 else

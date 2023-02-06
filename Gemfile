@@ -86,3 +86,4 @@ gem 'draper'
 gem 'pundit'
 
 gem "doorkeeper", "~> 5.6"
+gem 'jwt'

@@ -1,13 +1,23 @@
 class Api::V1::PaymentsController < ActionController::API
-    rescue_from ActiveRecord::RecordNotFound, with: :handle_error
-   
+    rescue_from StandardError, with: :error_500
+    rescue_from ActiveRecord::RecordNotFound, with: :error_404
+    rescue_from ActionController::ParameterMissing, with: :error_400
+    before_action :authenticate_request
+    before_action :doorkeeper_authorize!
+
+    def user_payments
+        @user=User.find(params[:id])
+        @payments=@user.payments.all
+        render json: {payments: @payments}
+    end
+
     def create
         @user=User.find(params[:id])
         if @user.address.present?
             @products=@user.cart.products
             @products.each do |p|
                 if (p.quantity - p.req_quantity)<0
-                    render json: {error: "not enough stock"}
+                    render json: {message: "not enough stock"}
                 end
             end
                 @payment=@user.payments.new(total: 0, payment_mode: "Upi", status: "Paid")
@@ -20,12 +30,12 @@ class Api::V1::PaymentsController < ActionController::API
                     @user.cart.products.each do |p|
                         p.quantity=p.quantity - p.req_quantity
                     end
-                    render json: {payment: @payment.as_json,order:@order.as_json,order_details:@order.order_details}, status: :ok
+                    render json: {message:"Order placed",payment: @payment.as_json,order:@order.as_json,order_details:@order.order_details}, status: :ok
                 else
-                    render json: {error: "not saved"}
+                    render json: {message: "Order not placed"}
                 end    
         else
-            render json: {error: "Add address"}
+            render json: {message: "Add address first"}
             
         end
 
@@ -37,6 +47,6 @@ class Api::V1::PaymentsController < ActionController::API
     end
     
     def handle_error(error)
-        render json: {error:error.message}, status: :not_found
+        render json: {message:error.message}, status: :not_found
     end
 end

@@ -9,7 +9,7 @@ class CartsController < ApplicationController
     end
 
     def insert
-        
+        debugger
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
         if @user.cart.present?
@@ -25,20 +25,16 @@ class CartsController < ApplicationController
     end
 
     def show
-        
         @user=User.find(params[:id])
-        @cart=@user.cart
-        @total=0
-        @cart.products.each do |p|
-            @total=@total+(p.price*p.req_quantity)
+        if @user.cart.present?
+            @cart=@user.cart
+            @total=0
+            @cart.products.each do |p|
+                @total=@total+(p.price*p.req_quantity)
+            end
+            @cart.update(total: @total)
         end
-        @cart.update(total: @total)
-        # end
         
-    end
-
-    def update
-          
     end
 
     def destroy

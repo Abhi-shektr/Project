@@ -14,11 +14,11 @@
             <li><%= link_to'Products',products_path(current_user), class:"nav-link active"%></li>
             <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
-            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
+            <li ><%= link_to'Profile',user_path(current_user), class: "nav-link "%></li>
           <%elsif seller_signed_in?%>
-            <li ><%= link_to'Orders',root_path, class: "nav-link"%></li>
-            <li><%= link_to'Products',seller_products_seller_path(current_seller), class:"nav-link active"%></li>
-            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link"%></li>
+            <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link active"%></li>
+            <li ><%= link_to'Profile',seller_path(current_seller), class: "nav-link "%></li>
           <%else%>
             <li><%= link_to'Are you a seller?',new_seller_session_path, class:"nav-link"%></li>
             <li ><%= link_to'SignUp/Login',new_user_session_path, class: "nav-link"%></li>
@@ -27,7 +27,7 @@
       </ul>
     </div>
   </div>
-</nav>
+  </nav>
 
 <div class="card ", style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)max-width: 300px;max-height:800px;margin: auto;text-align: center;font-family: arial;">
   <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" style="margin-top:20px;">

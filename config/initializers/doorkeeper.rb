@@ -21,7 +21,6 @@ Doorkeeper.configure do
       # end
 
       resource_owner_from_credentials do |_routes|
-        debugger
         User.authenticate(params[:email], params[:password])
       end
 
