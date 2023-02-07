@@ -1,10 +1,25 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation
+ 
+  controller do
+    def update
+      if current_admin_user.super_admin?
+        super
+      else
+        redirect_to admin_root_path, notice: "Ony Super Admins can update admin details"
+      end
+    end
 
+    def destroy
+      if current_admin_user.super_admin?
+        super
+      else
+        redirect_to admin_root_path, notice: "Ony Super Admins can delete admin details"
+      end
+    end
+  end
 
-  # if AdminUser..super_admin?
-  #   actions :all, except: [:edit, :destroy]
-  # end
+ 
 
   index do
     selectable_column

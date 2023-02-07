@@ -22,7 +22,6 @@ class Api::V1::ProductsController < Api::V1::BaseController
     end
 
     def create
-           
             if @seller.address.present?
                 product=@seller.products.create(name: params[:name], desc: params[:desc],price: params[:price],quantity: params[:quantity],image: params[:image],req_quantity: 1)
                 if product.save

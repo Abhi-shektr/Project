@@ -1,5 +1,5 @@
 class Api::V1::PaymentsController < Api::V1::BaseController
-    before_action :set_user, only: [:user_payments, :create, :]
+    before_action :set_user, only: [:user_payments, :create]
     before_action :set_product, only: [:order_count]
 
     def set_user
