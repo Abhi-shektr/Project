@@ -81,7 +81,7 @@ gem 'ransack'
 gem 'faker'
 gem 'activeadmin'
 gem 'sass-rails'
-gem 'cancancan'
+# gem 'cancancan'
 gem 'draper'
 gem 'pundit'
 
