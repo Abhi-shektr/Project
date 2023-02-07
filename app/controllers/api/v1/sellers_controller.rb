@@ -1,5 +1,5 @@
 class Api::V1::SellersController < Api::V1::BaseController
-    before_action :set_seller
+    before_action :set_seller, only: [:show,:total]
 
     def set_seller
         @seller=Seller.find(params[:id])
@@ -27,7 +27,6 @@ class Api::V1::SellersController < Api::V1::BaseController
 
 
     def show
-        
         addresses=@seller.address.all
         render json: {seller: @seller,addresses:addresses}
     end

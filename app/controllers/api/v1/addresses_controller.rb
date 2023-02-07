@@ -1,17 +1,11 @@
 class Api::V1::AddressesController < Api::V1::BaseController   
-    before_action :set_user
 
-    def set_user
-        @user=User.find(params[:id])
-    end
-     
     def new
         address=Address.new
         render json: {address: address},status: :ok
     end
 
     def create
-        
         if(params.has_key?(:user_id))
             user=User.find(params[:user_id])
             address=user.address.create(address_params)

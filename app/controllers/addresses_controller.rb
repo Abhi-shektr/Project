@@ -6,7 +6,6 @@ class AddressesController < ApplicationController
     end
 
     def create
-        debugger
         if user_signed_in?
             @user=current_user
             @address=@user.address.create(house: params[:address][:house], street: params[:address][:street],city: params[:address][:city],state: params[:address][:state])

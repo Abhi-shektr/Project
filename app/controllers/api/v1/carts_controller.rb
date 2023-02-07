@@ -1,8 +1,13 @@
 class Api::V1::CartsController < Api::V1::BaseController
-    before_action :set_user
+    before_action :set_user, only: [:show]
+    before_action :set_cart, only: [:destroy]
 
     def set_user
         @user=User.find(params[:id])
+    end
+
+    def set_cart
+        @cart=Cart.find(params[:id])
     end
     
     def index

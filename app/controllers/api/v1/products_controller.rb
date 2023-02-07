@@ -1,12 +1,13 @@
 class Api::V1::ProductsController < Api::V1::BaseController
-    before_action :set_product
+    before_action :set_product, only: [:show, :edit, :update, :destroy]
+    before_action :set_seller, only: [:create]
 
     def set_product
         @product=Product.find(params[:id])
     end
 
     def set_seller
-        @seller=Seller.find(params[:seller_id])
+        @seller=Seller.find(params[:id])
     end
 
    
@@ -53,7 +54,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
 
     def destroy
         @product.destroy
-        render json: {product: product}
+        render json: {product: @product}
     end
 
 
