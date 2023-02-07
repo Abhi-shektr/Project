@@ -1,6 +1,11 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation
 
+
+  # if AdminUser..super_admin?
+  #   actions :all, except: [:edit, :destroy]
+  # end
+
   index do
     selectable_column
     id_column

@@ -26,10 +26,12 @@
           <%end%>
       </ul>
     </div>
-    <%= form_tag root_path, method: :get do%>
+    <%if user_signed_in?%>
+    <%= form_tag products_path, method: :get do%>
       <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
       <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
       <%end%>
+    <%end%>
   </div>
   </nav>
 
@@ -59,6 +61,17 @@
     </tbody>
   </table>
   <%= link_to 'Go to Cart', cart_path(current_user),class:"btn btn-success btn-sm" %>
+  <%
+=begin%>
+ <script type="text/javascript">
+    $(document).ready(function(){
+      $('.button-color-change').click(function(){
+        $(this).toggleClass('clicked');
+      });
+    });
+</script> 
+<%
+=end%>
 <%else%>
   <table class="table", style="font-family:serif;">
     <thead>
@@ -95,3 +108,6 @@
   </table>
   <%=link_to 'Add new Product', new_product_path(:seller_id => params[:id]),class: "btn btn-primary" %>
 <%end%>
+<% if flash %>
+    <p class="notice text-success mt-4"><%= notice %></p>
+  <% end %>

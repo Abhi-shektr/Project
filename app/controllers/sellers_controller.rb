@@ -11,7 +11,7 @@ class SellersController < ApplicationController
         
         @seller=Seller.new(seller_params)
         puts seller_params
-        if @seller.save!
+        if @seller.save
             redirect_to root_path
         else
             render 'new'

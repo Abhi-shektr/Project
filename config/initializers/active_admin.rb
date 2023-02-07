@@ -5,6 +5,10 @@ ActiveAdmin.setup do |config|
   # for each of the active admin pages.
   #
   config.site_title = "Admin"
+  # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  # config.on_unauthorized_access = :access_denied
+  # config.cancan_ability_class = "MyCustomAbility"
+
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.

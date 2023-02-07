@@ -26,10 +26,12 @@
           <%end%>
       </ul>
     </div>
+    <% if user_signed_in? %>
       <%= form_tag root_path, method: :get do%>
       <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
       <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
       <%end%>
+    <%end%>
   </div>
   </nav>
 

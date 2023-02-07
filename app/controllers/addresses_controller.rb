@@ -6,12 +6,11 @@ class AddressesController < ApplicationController
     end
 
     def create
-        
+        debugger
         if user_signed_in?
             @user=current_user
             @address=@user.address.create(house: params[:address][:house], street: params[:address][:street],city: params[:address][:city],state: params[:address][:state])
             if @address.save
-                
                 redirect_to user_path(current_user)
             else
                 flash[:alert]=@address.errors.full_messages
@@ -25,7 +24,6 @@ class AddressesController < ApplicationController
     end
 
     def destroy
-        debugger
         @address=Address.find(params[:id])
         @address.destroy
         if user_signed_in?

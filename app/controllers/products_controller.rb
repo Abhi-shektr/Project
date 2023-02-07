@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
                 @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price],quantity: params[:product][:quantity],image: params[:product][:image],req_quantity: 1)
                 if @product.save
                     
-                    redirect_to seller_products_seller_path(current_seller) 
+                    redirect_to products_path
                 else
                     render 'new'
                 end
@@ -36,7 +36,6 @@ class ProductsController < ApplicationController
                 redirect_to seller_path(current_seller) 
             end 
         else
-            @total=0
             @cart=current_user.cart
             @product=Product.find(params[:product_id])
             @product.update(req_quantity:(params[:product][:quantity]))
@@ -55,7 +54,6 @@ class ProductsController < ApplicationController
     end
 
     def update
-        debugger
         @product=Product.find(params[:id])
         if @product.update(product_params)
             redirect_to products_path
@@ -69,7 +67,7 @@ class ProductsController < ApplicationController
     def destroy
         @product=Product.find(params[:id])
         @product.destroy
-        redirect_to seller_products_seller_path   
+        redirect_to products_path  
     end
 
 

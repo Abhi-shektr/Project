@@ -9,18 +9,20 @@ class CartsController < ApplicationController
     end
 
     def insert
-        debugger
         @user=User.find(params[:user_id])
         @product=Product.find(params[:product_id])
         if @user.cart.present?
-            @user.cart.products << @product
+            if @user.cart.products.include?(@product)
+                @product.update(req_quantity: (@product.req_quantity)+1)
+            else
+                @user.cart.products << @product
+            end
             
         else
-            @cart=@user.create_cart(user_id: params[:user_id],total: 0)
+            @cart=@user.create_cart(user_id: params[:user_id])
             @user.cart.products << @product
         end
-        flash[:notice] = "Item added"
-        
+        flash[:notice] = "#{@product.name} added to cart(#{@product.req_quantity} piece in cart)"        
         redirect_to products_path
     end
 
@@ -40,6 +42,7 @@ class CartsController < ApplicationController
     def destroy
         @cart=Cart.find(params[:id])
         @product=@cart.products.find(params[:product_id])
+        @product.update(req_quantity: 1)
         @cart.products.delete(@product)
         redirect_to cart_path(current_user)
     end

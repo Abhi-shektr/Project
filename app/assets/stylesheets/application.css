@@ -67,4 +67,6 @@ body {
     border-color: #4466f2!important;
 }
 
-
+.button-color-change.clicked{
+    background-color: red;
+}

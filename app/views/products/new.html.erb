@@ -30,22 +30,6 @@
   </nav>
 
 <br>
-<%
-=begin%>
- <%if @product.errors.any?%>
-    <div>
-    <ul>
-      <%= @product.errors.full_messages.each do |message|%>
-      <li><%= message%></li>
-  
-      <%end%>
-    </ul>
-    </div>
-
-<%end%> 
-<%
-=end%>
-<p><%=@product.errors%></p>
 <div  style="width:50%; margin-left:200px;margin-top:50px">
     
     <%= form_with model: @product, url: products_path ,local: true do |form| %>

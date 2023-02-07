@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
                     redirect_to cart_path(current_user) and return true
                 end
             end
-                @payment=@user.payments.new(total: @user.cart.total, payment_mode: "Upi", status: "Paid")
+                @payment=@user.payments.new( payment_mode: "Upi")
                 if @payment.save
                     @order=@user.orders.create(total: @user.cart.total, payment_id: @payment.id)
                     @products.each do |p|

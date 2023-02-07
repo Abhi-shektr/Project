@@ -28,37 +28,34 @@
     </div>
   </div>
   </nav>
-<%= form_with(model: @product, local: true) do |form| %>
-    <p>
-    <%= form.label :Name %><br>
-    <%= form.text_field :name %>
-  </p>
 
-  <p>
-    <%= form.label :Description %><br>
-    <%= form.text_area :desc %>
-  </p>
 
-  <p>
-    <%= form.label :Price %><br>
-    <%= form.text_area :price %>
-  </p>
+<div  style="width:50%; margin-left:200px;margin-top:50px">
+    
+    <%= form_with(model: @product, local: true) do |form| %>
+      <div class="field form-group">
+        <%= form.text_field :name,class:"form-control",placeholder:"Name"%><br>
+      </div>
 
-  <p>
-    <%= form.label :Quantity %><br>
-    <%= form.number_field :quantity %>
-  </p>
+      <div>
+        <%= form.text_area :desc,class:"form-control",placeholder:"Description" %><br>
+      </div>
 
-  <p>
-    <%= form.label :Image %><br>
-    <%= form.file_field :image %>
-  </p>
-  <%= hidden_field_tag :req_quantity, 1 %>
-  
-  <p>
-    <%= form.submit %>
-  </p>
- 
-<% end %>
- 
-<%= link_to 'Back', root_path %>
+      <div>
+        <%= form.text_field :price,class:"form-control",placeholder:"Price" %><br>
+      </div>
+
+      <div>
+        <%= form.number_field :quantity, in: 1..20, value: @product.quantity,class:"form-control" %><br>
+      </div>
+      <div>
+
+      <div>
+        <%= form.file_field :image,class:"form-control",placeholder:"Image" %><br>
+      </div>
+      <%= hidden_field_tag :seller_id, @seller %>
+      <div>
+        <%= form.submit :Submit,style:"border: none;border-radius:5px;outline: 0;padding: 12px;color: white;background-color: #000;text-align: center;cursor: pointer;width: 50%;font-size: 15px;margin-left:150px;margin-top:30px" %>
+      </div>
+    <% end %>
+</div>
