@@ -1,21 +1,17 @@
 class PaymentsController < ApplicationController
     def index
-        @user=current_user
-        @payments=@user.payments.all
-        @cart=@user.cart
+        @payments=current_user.payments.all
+        @cart=current_user.cart
         @products=@cart.products
         @cart.total=0
         @cart.products.each do |p|
             @cart.total=@cart.total+(p.price*p.req_quantity)
-        end
-        
-        
+        end        
     end
 
     def create
         if current_user.address.present?
-            @user=current_user
-            @products=@user.cart.products
+            @products=current_user.cart.products
             @products.each do |p|
                 if (p.quantity - p.req_quantity)<0
                     if p.quantity<=0
@@ -26,9 +22,9 @@ class PaymentsController < ApplicationController
                     redirect_to cart_path(current_user) and return true
                 end
             end
-                @payment=@user.payments.new( payment_mode: "Upi")
+                @payment=current_user.payments.new( payment_mode: "Upi")
                 if @payment.save
-                    @order=@user.orders.create(total: @user.cart.total, payment_id: @payment.id)
+                    @order=current_user.orders.create(total: current_user.cart.total, payment_id: @payment.id)
                     @products.each do |p|
                         @order_details=@order.order_details.create(quantity: p.req_quantity, product_id:p.id)
                         @order.order_details << @order_details 

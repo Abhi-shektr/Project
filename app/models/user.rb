@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+         
          validates :name, :phone, presence: true
          validates :phone, numericality: true
          validates_format_of :name, :with => /\A[^0-9`!@#\$%\^&*+_=]+\z/

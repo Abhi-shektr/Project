@@ -30,7 +30,7 @@ ActiveAdmin.register AdminUser do
       if current_admin_user.super_admin? || current_admin_user == resource
         super
       else
-        redirect_to admin_root_path, alert: "Only Super Admins can delete admin details"
+        redirect_to admin_admin_users_path, alert: "Only Super Admins can delete admin details"
       end
     end
   end

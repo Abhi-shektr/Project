@@ -1,12 +1,10 @@
 class OrdersController < ApplicationController
     def index
         if user_signed_in?
-            @user=current_user
-            @orders=@user.orders.all
+            @orders=current_user.orders.all
                     
         else
-            @seller=current_seller
-            @products=@seller.products.all
+            @products=current_seller.products.all
             
         end
     end

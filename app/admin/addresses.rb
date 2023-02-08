@@ -12,7 +12,6 @@ ActiveAdmin.register Address do
     Address.seller
   end
   
-
   filter :id
   filter :addressable_of_User_type_name, as: :string
   filter :addressable_of_Seller_type_name, as: :string
