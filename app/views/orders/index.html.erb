@@ -31,7 +31,7 @@
 
 <div style="margin-top:30px">
 <%if user_signed_in?%>
-    <%if @user.orders.present?%>
+    <%if current_user.orders.present?%>
         <section style="background-color: #eee;">
             <% @orders.each do |order| %>
             <div class="container py-1">

@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
     before_action :configure_permitted_parameters, if: :devise_controller?
 
-    rescue_from(ActiveRecord::RecordNotFound) {
-     raise(CanCan::AccessDenied, 'Invalid access request')
-   }
-   
      protected
 
           def configure_permitted_parameters

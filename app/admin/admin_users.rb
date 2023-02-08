@@ -35,14 +35,12 @@ ActiveAdmin.register AdminUser do
     end
   end
 
-  
- 
 
   index do
     selectable_column
     id_column
     column :email
-    column :super_admin?
+    column :super_admin
     column :created_at
     actions
   end

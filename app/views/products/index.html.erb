@@ -61,17 +61,6 @@
     </tbody>
   </table>
   <%= link_to 'Go to Cart', cart_path(current_user),class:"btn btn-success btn-sm" %>
-  <%
-=begin%>
- <script type="text/javascript">
-    $(document).ready(function(){
-      $('.button-color-change').click(function(){
-        $(this).toggleClass('clicked');
-      });
-    });
-</script> 
-<%
-=end%>
 <%else%>
   <table class="table", style="font-family:serif;">
     <thead>

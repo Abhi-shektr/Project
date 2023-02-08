@@ -33,15 +33,15 @@
 
   
 <div class="p-4 shadow-4 rounded-3" style="background-color: white;font-family:serif;">
-  <h2><%= @user.name %></h2>
+  <h2><%= current_user.name %></h2>
   <p>
-    <%= @user.phone %>
+    <%= current_user.phone %>
   </p>
 
   <hr class="my-4" />
 
   <p>
-    <%= @user.email %>
+    <%= current_user.email %>
   </p>
 
 <% if current_user.address.present? %>
