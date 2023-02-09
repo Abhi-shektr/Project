@@ -19,18 +19,14 @@ class SellersController < ApplicationController
 
     end
 
-    def seller_products
-        @sellers=Seller.all
-    end
-
-
     def show
-        @addresses=current_seller.address.all
+        @seller=Seller.find(params[:id])
+        @addresses=@seller.address.all
         @seller=Seller.find(params[:id]) 
     end
     
     private
     def seller_params
-        params.require(:seller).permit(:name, :phone, :address)
+        params.require(:seller).permit(:name, :email, :phone)
     end
 end

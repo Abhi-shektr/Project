@@ -1,8 +1,5 @@
 class CartsController < ApplicationController
-    def index
-        @cart=Cart.all
-    end
-
+    
     def new
         @cart=Cart.new
         @user=params[:user_id]

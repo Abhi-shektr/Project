@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :payment do
-    total {1000}
+    total {nil}
     payment_mode {"Upi"}
-    status {"Paid"}
+    status {nil}
   end
   
 end

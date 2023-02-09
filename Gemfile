@@ -77,7 +77,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'devise'
 gem "cssbundling-rails", "~> 1.1"
-
+gem 'shoulda-matchers'
 gem "jsbundling-rails", "~> 1.1"
 gem 'ransack'
 gem 'faker'
@@ -88,3 +88,4 @@ gem 'pundit'
 gem 'faker'
 gem "doorkeeper", "~> 5.6"
 gem 'jwt'
+gem 'rails-controller-testing'
