@@ -24,7 +24,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
             end
             render json: {Count: "#{c} orders for this product",Orders: orders}
         else
-            render json: {messsage: "No orders"}
+            render json: {message: "No orders"}
         end
 
     end

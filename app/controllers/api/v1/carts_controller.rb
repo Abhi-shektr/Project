@@ -21,10 +21,14 @@ class Api::V1::CartsController < Api::V1::BaseController
             user=User.find(params[:user_id])
             product=Product.find(params[:product_id])
             if user.cart.present?
-                user.cart.products << product
-                render json: {message:"product added to cart",product: product.as_json}
+                if @user.cart.products.include?(product)
+                    product.update(req_quantity: (product.req_quantity)+1)
+                    render json: {message:"Quantity updated",product: product.as_json}
+                else
+                    @user.cart.products << product
+                    render json: {message:"product added to cart",product: product.as_json}
+                end
                 
-
                 
             else
                 cart=user.create_cart(user_id: params[:user_id],total: 0)

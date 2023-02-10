@@ -14,43 +14,44 @@ RSpec.describe SellersController do
         end
       end
     
-    #   describe "POST #create" do
+      describe "POST #create" do
 
-    #     let(:valid_seller_params) { { seller: attributes_for(:seller) } }
-    #     let(:invalid_seller_params) { { seller: { name: nil } } }
-    
-    #     context "with valid params" do
+        let!(:seller) { create(:seller) }
+        let!(:invalid_seller_params) { { seller: { name: nil } } }
 
-    #       it "creates a new seller" do
-    #         expect {
-    #           post :create, params: valid_seller_params
-    #         }.to change(Seller, :count).by(1)
-    #       end
+        context "with valid params" do
+
+          it "creates a new seller" do
+            debugger
+            expect {
+              post :create, params: { name: seller.name,email: seller.email, phone: seller.phone }
+            }.to change(Seller, :count).by(1)
+          end
     
-    #       it "redirects to the root path" do
-    #         post :create, params: valid_seller_params
-    #         expect(response).to redirect_to(root_path)
-    #       end
-    #     end
+          it "redirects to the root path" do
+            post :create, params: valid_seller_params
+            expect(response).to redirect_to(root_path)
+          end
+        end
     
-    #     context "with invalid params" do
+        context "with invalid params" do
             
-    #       it "does not create a new seller" do
-    #         expect {
-    #           post :create, params: invalid_seller_params
-    #         }.to_not change(Seller, :count)
-    #       end
+          it "does not create a new seller" do
+            expect {
+              post :create, params: invalid_seller_params
+            }.to_not change(Seller, :count)
+          end
     
-    #       it "re-renders the new template" do
-    #         post :create, params: invalid_seller_params
-    #         expect(response).to render_template("new")
-    #       end
-    #     end
-    #   end
+          it "re-renders the new template" do
+            post :create, params: invalid_seller_params
+            expect(response).to render_template("new")
+          end
+        end
+      end
     
       describe "GET #show" do
         let(:seller) { create(:seller) }
-        let(:address) { create :address, addressable: user }
+        let(:address) { create(:address, addressable: user) }
 
         it "assigns the requested seller to @seller" do
           get :show, params: { id: seller.id }

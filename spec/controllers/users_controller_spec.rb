@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.describe UsersController do
   describe '#index' do
-    let(:user){build :user}
+    let!(:user1){create :user}
 
     before do
       get :index 
     end
-    it 'assigns @users' do
-        expect(assigns(:users)).to eq([user])
+    
+    it 'assigns @users' do  
+      expect(assigns(:users).first).to eq(user1)
     end
 
-    it 'assigns @users' do
+    it 'render index' do
       expect(response).to render_template('index')
     end
-
   end
 
   describe '#new' do
@@ -28,26 +28,23 @@ RSpec.describe UsersController do
       get :new
       expect(response).to render_template('new')
     end
-
   end
 
   describe '#create' do
     context 'with valid attributes' do
-      let(:user){create :user}
+      let!(:user){create :user}
 
-      # it 'creates a new user' do
-      #   expect {
-      #     post :create, params: { user: user.id,
-      #       name: user.name,
-      #       email: user.email, 
-      #       password: user.password }
-      #     }.to change(User, :count).by(1)
-      # end
+      it 'creates a new user' do
+        expect {
+          post :create, params: { name: user.name,email: user.email, phone: user.phone }
+        }.to change(User, :count).by(1)
+          debugger
+      end
 
-      # it 'redirects to the root path' do
-      #   post :create, params: { user: attributes_for(:user) }
-      #   expect(response).to redirect_to root_path
-      # end
+      it 'redirects to the root path' do
+        post :create, params: { user: attributes_for(:user) }
+        expect(response).to redirect_to root_path
+      end
     end
 
     context 'with invalid attributes' do

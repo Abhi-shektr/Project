@@ -19,6 +19,7 @@ RSpec.describe Product, type: :model do
       it 'should have price greater than zero' do
         expect {product1.save!}.to raise_error(ActiveRecord::RecordInvalid)
       end
+
     end
   end   
 end

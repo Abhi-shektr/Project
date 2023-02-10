@@ -73,7 +73,7 @@
                         <%end%>
                       <div class="d-flex flex-row gap-2 col-6">
                             <%= link_to 'Show', product_path(product), class:"btn btn-primary mt-2" %>
-                            <%= button_to  'remove', cart_path(:product_id => product.id ,:id => @cart.id),
+                            <%= button_to  'remove', cart_path(:id => current_user.id,:product_id => product.id ,:cart_id => @cart.id),
                                     method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger  mt-2"%>   
                         </div>
                     </div>
@@ -92,7 +92,7 @@
   </div>
   
   <div class="d-grid gap-2 col-6 mx-auto">
-   <%= link_to 'Proceed', payments_path, class:"btn btn-success btn-sm mb-4 py-8  " %>
+   <%= link_to 'Proceed', payments_path(:id => current_user.id), class:"btn btn-success btn-sm mb-4 py-8  " %>
   </div>
   
   <%else%>

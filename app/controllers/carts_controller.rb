@@ -37,11 +37,12 @@ class CartsController < ApplicationController
     end
 
     def destroy
-        @cart=Cart.find(params[:id])
+        @user=User.find(params[:id])
+        @cart=Cart.find(params[:cart_id])
         @product=@cart.products.find(params[:product_id])
         @product.update(req_quantity: 1)
         @cart.products.delete(@product)
-        redirect_to cart_path(current_user)
+        redirect_to cart_path(@user)
     end
 
     private
