@@ -4,7 +4,8 @@ RSpec.describe "Users", type: :request do
     describe 'GET #index' do
         let(:user1) { create :user,email:"user1@gmail.com",phone:9368741084 }
         let(:user2) { create :user,email:"user2@gmail.com",phone:8641749360 }
-        
+        before{get api_v1_users_path}
+
         it 'returns a success response' do
           expect(response).to have_http_status(200)
         end
@@ -18,8 +19,7 @@ RSpec.describe "Users", type: :request do
     describe 'GET #new' do
         let(:user3) { User.new }
     
-        before {headers = { 'Authorization' => "Bearer #{token}" }
-                 get new_api_v1_user_path }
+        before {get new_api_v1_user_path }
     
         it 'returns a success response' do
           expect(response).to have_http_status(:ok)
@@ -74,8 +74,7 @@ RSpec.describe "Users", type: :request do
         let!(:address){create(:address, addressable: user)}
     
         before do
-          headers = { 'Authorization' => "Bearer #{token}" }
-            get api_v1_user_path(user) 
+          get api_v1_user_path(user) 
         end
     
         it "returns a success response" do

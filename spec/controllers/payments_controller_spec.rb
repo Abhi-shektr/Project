@@ -12,34 +12,31 @@ RSpec.describe PaymentsController do
             cart.products << product1         
         end
 
-        it 'should assign @payment' do
+        it 'should assign payments' do
             expect(assigns(:payments)).to eq([payment])
         end
 
-        it 'should assign @product' do
+        it 'should assign products' do
             expect(assigns(:products)).to eq([product1])
         end
     end
 
     # describe '#create' do
     #     let(:user1){create(:user)}
+    #     let(:user2){create(:user)}
     #     let(:seller){create(:seller)}
     #     let(:payment){create(:payment,user: user1)}
     #     let!(:cart){create(:cart,user: user1)}
     #     let!(:product1){create(:product,seller: seller)}
     #     let!(:address){create(:address,addressable: user1)}
 
-    #     before do
-    #         post :create, params: {id: user1.id} 
-        
-    #         cart.products << product1  
-                
-    #     end
-
     #     context 'When user has address' do
-    #         # before do
-    #         #     user1.update(address: create(:address, addressable: user1))
-    #         # end
+    #         before do
+    #             post :create, params: {id: user1.id} 
+    #             cart.products << product1 
+    #             cart.save      
+    #         end
+
     #         context "when there is enough stock" do
 
     #             it "creates a new order and order details" do

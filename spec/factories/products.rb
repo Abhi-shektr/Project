@@ -4,6 +4,7 @@ FactoryBot.define do
     desc {"Hooded Neck Half Sleeve Slim Cotton Blend"}
     price {899}
     quantity {10} 
+    req_quantity {1} 
   end
 
 end

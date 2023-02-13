@@ -8,7 +8,6 @@ class CartsController < ApplicationController
     def insert
         
         @user=User.find(params[:user_id])
-        
         @product=Product.find(params[:product_id])
         if @user.cart.present?
             if @user.cart.products.include?(@product)

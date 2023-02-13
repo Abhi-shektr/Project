@@ -3,7 +3,6 @@ class PaymentsController < ApplicationController
 
     def set_user
         @user=User.find(params[:id])
-        
     end
 
     def index
@@ -28,8 +27,8 @@ class PaymentsController < ApplicationController
                 @payment=@user.payments.new( payment_mode: "Upi")
                 if @payment.save
                     @order=@user.orders.create(total: @user.cart.total, payment_id: @payment.id)
-                    debugger
                     @products.each do |p|
+                        debugger
                         @order_details=@order.order_details.create(quantity: p.req_quantity, product_id:p.id)
                         @order.order_details << @order_details 
                         
@@ -56,6 +55,6 @@ class PaymentsController < ApplicationController
 
     private
     def payment_params
-        params.require(:payment).permit(:id, :total, :mode, :status, :user_id)
+        params.require(:payment).permit(:total, :mode, :status, :user_id)
     end
 end

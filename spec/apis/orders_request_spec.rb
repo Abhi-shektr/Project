@@ -8,7 +8,7 @@ RSpec.describe "Orders", type: :request do
         let!(:order1){create(:order,user:user,payment:payment)}
 
         before do
-            get "/api/v1/orders", params: {id: user.id}
+            get "/api/v1/orders", params: {id: user.id},headers:{"Authorization" => "Bearer #{"0APMhH08H7cyPivtOLa5f82B9E6fPk_pfibPCofKuHc"}" }
         end
 
         it 'returns a success response' do
@@ -35,7 +35,7 @@ RSpec.describe "Orders", type: :request do
         context 'When products has orders' do
             
           it 'returns count of orders for the product' do  
-            get "/api/v1/orders/order_count", params: {id: product.id}              
+            get "/api/v1/orders/order_count", params: {id: product.id},headers:{"Authorization" => "Bearer #{"-0_ViFy79bgzFFIlhvxGEPlxb0g-RtdIqSzFhX0GtSw"}" }           
               expect(JSON.parse(response.body).count).to eq(2)
             end
         end

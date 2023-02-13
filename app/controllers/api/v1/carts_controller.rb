@@ -18,9 +18,9 @@ class Api::V1::CartsController < Api::V1::BaseController
 
     def insert
         if(params.has_key?(:user_id)&params.has_key?(:product_id))
-            user=User.find(params[:user_id])
+            @user=User.find(params[:user_id])
             product=Product.find(params[:product_id])
-            if user.cart.present?
+            if @user.cart.present?
                 if @user.cart.products.include?(product)
                     product.update(req_quantity: (product.req_quantity)+1)
                     render json: {message:"Quantity updated",product: product.as_json}
@@ -31,8 +31,8 @@ class Api::V1::CartsController < Api::V1::BaseController
                 
                 
             else
-                cart=user.create_cart(user_id: params[:user_id],total: 0)
-                user.cart.products << product
+                cart=@user.create_cart(user_id: params[:user_id],total: 0)
+                @user.cart.products << product
                 render json: {message:"Cart is created and product is added to cart",cart: cart,product: product.as_json}
             end
         else

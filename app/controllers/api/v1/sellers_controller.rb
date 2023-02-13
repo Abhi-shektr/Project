@@ -40,8 +40,7 @@ class Api::V1::SellersController < Api::V1::BaseController
             gain+=order.total
             end
         end
-        
-        render json: {"Total amount recieved to seller":gain}
+        render json: {"Total amount received to seller":gain}
     end
 
     private

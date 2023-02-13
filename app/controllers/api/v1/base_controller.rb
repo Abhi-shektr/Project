@@ -7,6 +7,7 @@ class Api::V1::BaseController < ActionController::API
 
     def authenticate_request
         bearer_token=request.headers["Authorization"]
+        debugger
         render json:{message:"Authorization token is missing"},status: :unauthorized unless bearer_token.present?
     end
 
