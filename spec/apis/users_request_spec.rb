@@ -2,21 +2,35 @@ require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
     describe 'GET #index' do
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::UsersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+      
         let(:user1) { create :user,email:"user1@gmail.com",phone:9368741084 }
         let(:user2) { create :user,email:"user2@gmail.com",phone:8641749360 }
-        before{get api_v1_users_path}
 
         it 'returns a success response' do
+          get api_v1_users_path
           expect(response).to have_http_status(200)
         end
 
         it 'returns all users' do
+          get api_v1_users_path,headers:{"Authorization" => "my-token" }
             expect(JSON.parse(response.body)['user'].count).eql?(2)
           end
     
     end
 
     describe 'GET #new' do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::UsersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         let(:user3) { User.new }
     
         before {get new_api_v1_user_path }
@@ -31,6 +45,13 @@ RSpec.describe "Users", type: :request do
     end
 
     describe "POST #create" do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::UsersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         context "with valid parameters" do 
           it "creates a new user" do
             expect {
@@ -70,11 +91,18 @@ RSpec.describe "Users", type: :request do
       end
 
       describe "GET #show" do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::UsersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         let(:user) { create(:user,email:"adam@gmail.com",phone:9735485763) }
         let!(:address){create(:address, addressable: user)}
-    
         before do
-          get api_v1_user_path(user) 
+          stub_doorkeeper_token("my-token")
+          get api_v1_user_path(user) , params: {id: user.id}
         end
     
         it "returns a success response" do
@@ -91,6 +119,13 @@ RSpec.describe "Users", type: :request do
       
        
       describe 'DELETE #destroy' do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::UsersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         let!(:user) { create(:user) }
         it 'deletes the user' do
           expect {

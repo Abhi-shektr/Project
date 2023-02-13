@@ -1,5 +1,5 @@
 class Api::V1::PaymentsController < Api::V1::BaseController
-    before_action :set_user, only: [:user_payments, :create]
+    before_action :set_user, only: [:user_payments, :create, :index]
     before_action :set_product, only: [:order_count]
 
     def set_user
@@ -11,22 +11,28 @@ class Api::V1::PaymentsController < Api::V1::BaseController
         render json: {payments: payments}
     end
 
+    def index
+        @payments=@user.payments.all
+        @cart=@user.cart
+        @products=@cart.products        
+    end
+
     def create
         if @user.address.present?
             products=@user.cart.products
             products.each do |p|
                 if (p.quantity - p.req_quantity)<0
-                    render json: {message: "not enough stock"}
+                    render json: {message: "not enough stock"} and return true
                 end
             end
-                payment=@user.payments.new( payment_mode: "Upi")
+                payment=@user.payments.new( payment_mode: "Upi")        
                 if payment.save
                     order=@user.orders.create(total: @user.cart.total, payment_id: payment.id)
                     products.each do |p|
                         order_details=order.order_details.create(quantity: p.req_quantity, product_id:p.id)
                         order.order_details << order_details 
                     end
-                    user.cart.products.each do |p|
+                    @user.cart.products.each do |p|
                         p.quantity=p.quantity - p.req_quantity
                     end
                     render json: {message:"Order placed",payment: payment.as_json,order:order.as_json,order_details:order.order_details}, status: :ok
@@ -35,7 +41,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
                 end    
         else
             render json: {message: "Add address first"}
-            
         end
 
     end

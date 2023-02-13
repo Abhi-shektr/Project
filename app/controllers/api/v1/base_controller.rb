@@ -3,11 +3,12 @@ class Api::V1::BaseController < ActionController::API
     rescue_from ActiveRecord::RecordNotFound, with: :error_404
     rescue_from ActionController::ParameterMissing, with: :error_400
     # before_action :authenticate_request
-    # before_action :doorkeeper_authorize!
+    before_action :doorkeeper_authorize!
+
+    private
 
     def authenticate_request
         bearer_token=request.headers["Authorization"]
-        debugger
         render json:{message:"Authorization token is missing"},status: :unauthorized unless bearer_token.present?
     end
 
@@ -21,5 +22,9 @@ class Api::V1::BaseController < ActionController::API
 
     def error_500(error)
         render json: {message:error.message}, status: :internal_server_error
+    end
+  
+    def doorkeeper_authorize!
+        super
     end
 end

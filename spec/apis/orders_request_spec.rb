@@ -1,26 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe "Orders", type: :request do
-    
+
     describe 'GET#index' do
-        let(:user){create(:user)}
+
+      let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+      before do
+       allow_any_instance_of(Api::V1::OrdersController).to receive(:doorkeeper_authorize!).and_return(true)
+      end
+
+        let!(:user){create(:user)}  
+
         let(:payment){create(:payment,user:user)}
         let!(:order1){create(:order,user:user,payment:payment)}
 
-        before do
-            get "/api/v1/orders", params: {id: user.id},headers:{"Authorization" => "Bearer #{"0APMhH08H7cyPivtOLa5f82B9E6fPk_pfibPCofKuHc"}" }
-        end
-
         it 'returns a success response' do
+             get "/api/v1/orders", params: {id: user.id} 
             expect(response).to have_http_status(200)
           end
   
           it 'returns all orders of that user' do
+            get "/api/v1/orders", params: {id: user.id} 
               expect(JSON.parse(response.body).count).to eq(1)
             end
     end
 
     describe 'GET#order_count' do
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+          allow_any_instance_of(Api::V1::OrdersController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         let(:user){create(:user)}
         let(:seller){create(:seller)}
         let(:payment){create(:payment,user:user)}
@@ -42,10 +54,23 @@ RSpec.describe "Orders", type: :request do
 
         context 'When products has no orders' do
     
-            it 'returns message' do
+            it 'returns message:no orders' do
                 get "/api/v1/orders/order_count", params: {id: product2.id}
                 expect(JSON.parse(response.body)["message"]).to eq("No orders")
               end
           end
     end
+
+
+    # private
+
+    # def user_access_token(user)
+    #   app = Doorkeeper::Application.create(name: 'test', redirect_uri: 'http://clientsite.com')
+    #   client = OAuth2::Client.new(app.uid, app.secret) do |b|
+    #     b.request :url_encoded
+    #     b.adapter :rack, Rails.application
+    #   end
+    #   token_obj = user.doorkeeper_access_token
+    #   access_token ||= OAuth2::AccessToken.new(client, token_obj.token)
+    # end
 end

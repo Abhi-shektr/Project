@@ -13,7 +13,8 @@ class PaymentsController < ApplicationController
 
     def create
         if @user.address.present?
-            @products=@user.cart.products
+            @cart=@user.cart
+            @products=@cart.products
             @products.each do |p|
                 if (p.quantity - p.req_quantity)<0
                     if p.quantity<=0
@@ -28,18 +29,15 @@ class PaymentsController < ApplicationController
                 if @payment.save
                     @order=@user.orders.create(total: @user.cart.total, payment_id: @payment.id)
                     @products.each do |p|
-                        debugger
                         @order_details=@order.order_details.create(quantity: p.req_quantity, product_id:p.id)
                         @order.order_details << @order_details 
-                        
-                        
+                
                     end
 
                     @user.cart.products.each do |p|
                         p.quantity=p.quantity - p.req_quantity
                         p.update(req_quantity:1)
                     end
-                    @user.cart.destroy
                     redirect_to orders_path
                 else
                     render cart_path(@user)

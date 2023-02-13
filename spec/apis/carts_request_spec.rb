@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "Carts", type: :request do
+    
+    
         describe '#insert' do
+            let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+            before do
+                allow_any_instance_of(Api::V1::CartsController).to receive(:doorkeeper_authorize!).and_return(true)
+            end
+            
             let(:user) { create(:user) }
             let!(:cart) { create(:cart,user: user) }
             let(:seller) { create(:seller) }
@@ -36,6 +44,11 @@ RSpec.describe "Carts", type: :request do
         end
 
     describe '#show'do
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::CartsController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
         let(:user) { create(:user) }
         let(:cart) { create(:cart,user: user) }
         let(:seller) { create(:seller) }
@@ -57,6 +70,12 @@ RSpec.describe "Carts", type: :request do
     end
 
     describe '#destroy' do
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::CartsController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+        
         let(:user) { create(:user) }
         let(:cart) { create(:cart,user: user) }
         let(:seller) { create(:seller) }

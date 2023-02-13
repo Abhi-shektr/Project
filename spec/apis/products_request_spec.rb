@@ -2,6 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "Products", type: :request do
     describe "GET #index" do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::ProductsController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         let(:seller) { create(:seller) }
         let!(:product) { create(:product,seller: seller) }
         
@@ -12,6 +19,13 @@ RSpec.describe "Products", type: :request do
       end
     
       describe "POST #create" do
+
+        let(:token) { instance_double('Doorkeeper::AccessToken') }
+
+        before do
+            allow_any_instance_of(Api::V1::ProductsController).to receive(:doorkeeper_authorize!).and_return(true)
+        end
+
         context "when seller is signed in" do
           let!(:seller) { create(:seller,email:"s@gmail.com",phone:8765487658) }
 
