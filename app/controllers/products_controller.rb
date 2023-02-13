@@ -27,13 +27,12 @@ class ProductsController < ApplicationController
     end
 
     def create
-        
         if seller_signed_in?
             if current_seller.address.present?
                 @seller=current_seller
                 @product=@seller.products.create(name: params[:product][:name], desc: params[:product][:desc],price: params[:product][:price],quantity: params[:product][:quantity],image: params[:product][:image],req_quantity: 1)
+                
                 if @product.save
-                    
                     redirect_to products_path
                 else
                     render 'new'

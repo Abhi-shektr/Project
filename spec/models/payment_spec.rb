@@ -6,9 +6,10 @@ RSpec.describe Payment, type: :model do
     let!(:user) { create(:user) }
     let!(:cart) { create(:cart, user: user) }
     let!(:payment) { create(:payment, user: user) }
-
     context "Callbacks" do
-      it "sets the status to 'Paid' if it hasn't been set" do
+
+      it "sets the status to 'Paid' and total to cart total if it hasn't been set" do
+        
         expect(payment.status).to eq("Paid")
         expect(payment.total).to eq(cart.total)
       end

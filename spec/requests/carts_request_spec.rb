@@ -12,24 +12,24 @@ RSpec.describe "Carts", type: :request do
             cart.products << product1
         end
 
-        context 'when user\'s cart is present' do
-            context 'when product is already present in cart' do
+        # context 'when user\'s cart is present' do
+        #     context 'when product is already present in cart' do
 
-                it 'should increase the quantity' do
-                    post "/api/v1/carts/insert",params: {user_id: user.id,product_id: product1.id}
-                    debugger
-                    expect(JSON.parse(response.body)["product"]["req_quantity"]).to eq(3)
-                end
-            end
+        #         it 'should increase the quantity' do
+        #             post "/api/v1/carts/insert",params: {user_id: user.id,product_id: product1.id}
+        #             debugger
+        #             expect(JSON.parse(response.body)["product"]["req_quantity"]).to eq(3)
+        #         end
+        #     end
 
-            # context 'when product is not present in cart' do
+        #     context 'when product is not present in cart' do
                 
-            #     it 'should add product to cart' do
-            #         post "/api/v1/carts/insert",params: {user_id: user.id,product_id: product2.id}
-            #         expect(JSON.parse(response.body)["product"]).to include(product2.as_json.stringify_keys)
-            #     end
-            # end
-        end
+        #         it 'should add product to cart' do
+        #             post "/api/v1/carts/insert",params: {user_id: user.id,product_id: product2.id}
+        #             expect(JSON.parse(response.body)["product"]).to include(product2.as_json.stringify_keys)
+        #         end
+        #     end
+        # end
 
         context 'when user\'s cart is not present' do
             

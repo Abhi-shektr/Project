@@ -43,11 +43,7 @@ class Api::V1::CartsController < Api::V1::BaseController
     def show
         if @user.cart.present?
             cart=@user.cart
-            total=0
-            cart.products.each do |p|
-                total=total+(p.price*p.req_quantity)
-            end
-            cart.update(total: total)
+            cart.save
             render json: {message:"Showing cart",cart: @user.cart,products: cart.products}
         end
     end

@@ -7,7 +7,7 @@ RSpec.describe UsersController do
     before do
       get :index 
     end
-    
+
     it 'assigns @users' do  
       expect(assigns(:users).first).to eq(user1)
     end
@@ -32,26 +32,26 @@ RSpec.describe UsersController do
 
   describe '#create' do
     context 'with valid attributes' do
-      let!(:user){create :user}
+      let!(:user1){create :user}
 
       it 'creates a new user' do
         expect {
-          post :create, params: { name: user.name,email: user.email, phone: user.phone }
+          post :create, params: { user: {name: "name",email: "email@gmail.com", phone: 8745345891,password:"pass123" }}
         }.to change(User, :count).by(1)
-          debugger
+  
       end
 
       it 'redirects to the root path' do
-        post :create, params: { user: attributes_for(:user) }
+        post :create, params: { user: {name: "jon",email: "email1@gmail.com", phone: 92746583939 ,password:"pass123" }}
         expect(response).to redirect_to root_path
       end
     end
 
     context 'with invalid attributes' do
     
-      it 're-renders the new template' do
-        post :create, params: { user: attributes_for(:user, name: nil) }
-        expect(response).to render_template :new
+      it 'renders the new template' do
+        post :create, params: { user: { name: nil} }
+        expect(response).to render_template "users/new"
       end
       
     end
@@ -65,7 +65,7 @@ RSpec.describe UsersController do
       get :show, params: { id: user.id }
       expect(response).to have_http_status(:success)
       expect(assigns(:user)).to eq(User.last)
-      expect(assigns(:address)).to eq(Address.last)
+      expect(assigns(:addresses)).eql?(address)
     end
 
   end

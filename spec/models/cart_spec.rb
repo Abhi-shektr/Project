@@ -18,11 +18,11 @@ RSpec.describe Cart, type: :model do
   end
 
   describe "Callback" do
-    let(:user){build(:user)}
-    let(:cart) {create(:cart, user: user)}
+    let(:user){create(:user)}
+    let!(:cart) {create(:cart, user: user)}
     context "Set cart" do
-      it "sets the total to 0 " do
-        expect(cart.total).to eq(0)
+      it "sets the total " do
+        expect(cart.reload.total).to eq(0)
       end
     end
   end

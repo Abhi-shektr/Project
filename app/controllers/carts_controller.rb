@@ -2,11 +2,13 @@ class CartsController < ApplicationController
     
     def new
         @cart=Cart.new
-        @user=params[:user_id]
+        @user=User.find(params[:user_id])
     end
 
     def insert
+        
         @user=User.find(params[:user_id])
+        
         @product=Product.find(params[:product_id])
         if @user.cart.present?
             if @user.cart.products.include?(@product)
@@ -19,7 +21,8 @@ class CartsController < ApplicationController
             @cart=@user.create_cart(user_id: params[:user_id])
             @user.cart.products << @product
         end
-        flash[:notice] = "#{@product.name} added to cart(#{@product.req_quantity} piece in cart)"        
+        flash[:notice] = "#{@product.name} added to cart(#{@product.req_quantity} piece in cart)"  
+      
         redirect_to products_path
     end
 
@@ -27,11 +30,7 @@ class CartsController < ApplicationController
         @user=User.find(params[:id])
         if @user.cart.present?
             @cart=@user.cart
-            @total=0
-            @cart.products.each do |p|
-                @total=@total+(p.price*p.req_quantity)
-            end
-            @cart.update(total: @total)
+            @cart.save
         end
         
     end

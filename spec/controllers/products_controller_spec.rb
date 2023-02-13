@@ -13,11 +13,11 @@ RSpec.describe ProductsController do
     
       describe "POST #create" do
         context "when seller is signed in" do
-          let!(:seller) { create(:seller,email:"freshseller@gmail.com") }
+          let(:seller) { create(:seller) }
           before { sign_in(seller) }
     
           context "with valid address" do
-            let!(:address) { create(:address, seller: seller) }
+            let!(:address) { create(:address, addressable: seller) }
             
             it "creates a new product" do
               expect {

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Address, type: :model do
   describe 'Validations' do
-    let(:address) { build(:address) }
+    let(:address) { create(:address) }
 
     it 'is valid with valid attributes' do
       expect(address).to be_valid
