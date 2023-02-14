@@ -35,6 +35,7 @@ class ProductsController < ApplicationController
                 if @product.save
                     redirect_to products_path
                 else
+                    # flash[:error] = @product.errors.full_messages.join(", ")
                     render 'new'
                 end
             else

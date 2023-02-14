@@ -27,6 +27,7 @@ class Api::V1::ProductsController < Api::V1::BaseController
                 if product.save
                     render json: {product: product}
                 else
+                    
                     render json: {message: "Product not created"}
                 end
             else
