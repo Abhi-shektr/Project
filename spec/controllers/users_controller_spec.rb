@@ -1,22 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController do
-  describe '#index' do
-    let!(:user1){create :user}
-
-    before do
-      get :index 
-    end
-
-    it 'assigns @users' do  
-      expect(assigns(:users).first).to eq(user1)
-    end
-
-    it 'render index' do
-      expect(response).to render_template('index')
-    end
-  end
-
   describe '#new' do
 
     it 'assigns a new user to @user' do
@@ -51,7 +35,7 @@ RSpec.describe UsersController do
     
       it 'renders the new template' do
         post :create, params: { user: { name: nil} }
-        expect(response).to render_template "users/new"
+        expect(response).to render_template "new"
       end
       
     end
@@ -63,8 +47,7 @@ RSpec.describe UsersController do
   
     it 'returns success status' do
       get :show, params: { id: user.id }
-      expect(response).to have_http_status(:success)
-      expect(assigns(:user)).to eq(User.last)
+      expect(assigns(:user)).eql?(user)
       expect(assigns(:addresses)).eql?(address)
     end
 

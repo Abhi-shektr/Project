@@ -109,11 +109,16 @@
                     <div class="d-flex flex-column mt-2">
                         <%= link_to 'Show', product_path(product), class:"btn btn-primary btn-sm" %>
                         <div class="d-flex flex-column mt-2">
-                        <% if current_user.cart.products.include?(product)%>
-                            <i><%= link_to 'Add More', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-warning btn-sm",style:"width:198px;"  %></i>
+                        <% if current_user.cart.present?%>
+                          <% if current_user.cart.products.include?(product)%>
+                              <i><%= link_to 'Add More', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-warning btn-sm",style:"width:198px;"  %></i>
+                          <%else%>
+                              <%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-success btn-sm"%>
+                          <%end%>
                         <%else%>
-                            <%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-success btn-sm"%>
+                              <%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-success btn-sm"%>
                         <%end%>
+                        
                     </div>
                         
                     </div>

@@ -28,5 +28,14 @@ RSpec.describe Product, type: :model do
       end
 
     end
-  end   
+  end 
+  
+  describe "Associations" do
+    let(:seller) { create(:seller) }
+    let(:product) { create(:product, seller: seller) }
+
+      it 'belongs to a seller' do
+        expect(product.seller).to eq(seller)
+      end
+    end
 end
