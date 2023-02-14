@@ -22,6 +22,17 @@ RSpec.describe Address, type: :model do
       address.state = nil
       expect(address).to_not be_valid
     end
+  
+    it 'is  valid only with letters(numbers not allowed)' do
+      address.street = "124"
+      expect(address).to_not be_valid
+    end
+
+    it 'is  valid only with letters(symbols not allowed)' do
+      address.city = "$%@#"
+      expect(address).to_not be_valid
+    end
+
   end   
 
   describe 'Association' do

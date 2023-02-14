@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
     describe 'Validation testing' do
+      
       context 'While creating user' do
         let(:user1) {build :user}
         let(:user2) {build :user,email: "email"}

@@ -16,6 +16,13 @@ RSpec.describe Product, type: :model do
         expect(product.seller).to eq(seller)
       end
 
+
+      it 'is not valid for product without name' do
+        product.name = nil
+        expect(product.valid?).to eq(false)
+      end
+
+
       it 'should have price greater than zero' do
         expect {product1.save!}.to raise_error(ActiveRecord::RecordInvalid)
       end

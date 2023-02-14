@@ -42,7 +42,7 @@
     <p class="card-text"><%= @product.desc %></p>
     <p class="price",style= "color:grey;font-size: 22px;"><strong>₹<%= @product.price %></strong></p>
     <%if user_signed_in?%>
-        <p><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => @product.id),:method => :post,class:"btn btn-primary btn-sm",style:"border: none;outline: 0;padding: 12px;color: white;background-color: #000;text-align: center;cursor: pointer;width: 50%;font-size: 18px;"%></p>
+        <p><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => @product.id),:method => :post,class:"btn btn-success btn-sm",style:"border: none;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 18px;"%></p>
     <%end%>
   </div>
 </div>

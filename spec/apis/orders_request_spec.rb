@@ -33,7 +33,8 @@ RSpec.describe "Orders", type: :request do
           allow_any_instance_of(Api::V1::OrdersController).to receive(:doorkeeper_authorize!).and_return(true)
         end
 
-        let(:user){create(:user)}
+        let!(:user){create(:user)}
+        # let(:token) { generate_access_token_for(user) }
         let(:seller){create(:seller)}
         let(:payment){create(:payment,user:user)}
         let!(:order1){create(:order,user:user,payment:payment)}
@@ -47,7 +48,7 @@ RSpec.describe "Orders", type: :request do
         context 'When products has orders' do
             
           it 'returns count of orders for the product' do  
-            get "/api/v1/orders/order_count", params: {id: product.id},headers:{"Authorization" => "Bearer #{"-0_ViFy79bgzFFIlhvxGEPlxb0g-RtdIqSzFhX0GtSw"}" }           
+            get "/api/v1/orders/order_count", params: {id: product.id},headers:{"Authorization" => "Bearer #{token}" }           
               expect(JSON.parse(response.body).count).to eq(2)
             end
         end
@@ -62,7 +63,7 @@ RSpec.describe "Orders", type: :request do
     end
 
 
-    # private
+    private
 
     # def user_access_token(user)
     #   app = Doorkeeper::Application.create(name: 'test', redirect_uri: 'http://clientsite.com')
@@ -72,5 +73,13 @@ RSpec.describe "Orders", type: :request do
     #   end
     #   token_obj = user.doorkeeper_access_token
     #   access_token ||= OAuth2::AccessToken.new(client, token_obj.token)
+    # end
+
+    # def generate_access_token_for(user)
+    #   user ||= FactoryBot.create(:user)
+    #   authentication = FactoryBot.create(:authentication, user: user)
+    #   application = Doorkeeper::Application.create!(:name => "MyApp", :redirect_uri => "http://app.com")
+    #   access_token = Doorkeeper::AccessToken.create!(:application_id => application.id, :resource_owner_id => authentication.identity.id)
+    #   access_token.token
     # end
 end

@@ -54,7 +54,7 @@
   <%= address.street %>
   <%= address.city %>
   <%= address.state %>
-  <%= button_to  'Remove', addresses_path(address),
+  <%= button_to  'Remove', address_path(address),
               method: :delete,
               data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%>
   </p>  

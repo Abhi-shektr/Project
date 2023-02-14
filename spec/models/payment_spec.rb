@@ -2,14 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Payment, type: :model do
   
-  describe "set_payment" do
-    let!(:user) { create(:user) }
+  describe "Callbacks" do
+    let(:user) { create(:user) }
     let!(:cart) { create(:cart, user: user) }
     let!(:payment) { create(:payment, user: user) }
-    context "Callbacks" do
+    context "set_payment" do
 
       it "sets the status to 'Paid' and total to cart total if it hasn't been set" do
-        
         expect(payment.status).to eq("Paid")
         expect(payment.total).to eq(cart.total)
       end
