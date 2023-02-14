@@ -33,16 +33,21 @@
   <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light" style="margin-top:20px;">
     <% if @product.image.attached? %>
         <p>
-        <%= image_tag(@product.image, style: "height :350px")%>
+        <%= image_tag(@product.image, style:"width:600px;height:400px;border-radius:10px")%>
         </p>
     <% end%>
   </div>
   <div class="card-body">
     <h5 class="card-title"><strong><%= @product.name %></strong></h5>
     <p class="card-text"><%= @product.desc %></p>
-    <p class="price",style= "color:grey;font-size: 22px;"><strong>₹<%= @product.price %></strong></p>
-    <%if user_signed_in?%>
-        <p><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => @product.id),:method => :post,class:"btn btn-success btn-sm",style:"border: none;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 18px;"%></p>
+    <p class="price",style= "color:grey;font-size:22px;"><strong>₹<%= @product.price %></strong></p>
+   <%if user_signed_in?%>
+    <% if current_user.cart.products.include?(@product)%>
+        <i><%= link_to 'Add More', insert_carts_path(:user_id => current_user.id,:product_id => @product.id,:qty => @qty),:method => :post,class:"btn btn-warning btn-sm",style:"border: none;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 18px;"  %></i>
+    <%else%>
+        <%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => @product.id,:qty => @qty),:method => :post,class:"btn btn-success btn-sm",style:"border: none;outline: 0;padding: 12px;text-align: center;cursor: pointer;width: 50%;font-size: 18px;"%>
     <%end%>
+   <%end%>
+
   </div>
 </div>

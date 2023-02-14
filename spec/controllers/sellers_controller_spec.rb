@@ -40,7 +40,7 @@ RSpec.describe SellersController do
             }.to_not change(Seller, :count)
           end
     
-          it "re-renders the new template" do
+          it "renders the new template" do
             post :create, params: { seller: { name: nil } }
             expect(response).to render_template("new")
           end

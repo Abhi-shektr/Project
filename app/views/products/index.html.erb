@@ -27,9 +27,9 @@
       </ul>
     </div>
     <%if user_signed_in?%>
-    <%= form_tag products_path, method: :get do%>
-      <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
-      <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
+      <%= form_tag root_path, method: :get do%>
+      <%= text_field_tag :q, params[:q], placeholder: "Search products",style: "border-radius:10px;width:400px;"%>
+      <%= submit_tag "Search",name: nil,class:"btn btn-success",style: "margin-left:5px;margin-right:15px;"%>
       <%end%>
     <%end%>
   </div>
@@ -37,6 +37,7 @@
 
 
 <%if user_signed_in?%>
+
   <table class="table">
     <thead>
       <tr>
@@ -59,9 +60,16 @@
           <td><%= product.desc %></td>
           
           <td>₹<%= product.price %></td>
-
           <td><%= link_to 'Show', product_path(product),class:"btn btn-primary btn-sm" %></td>
-          <td><%= link_to 'Add', insert_carts_path(:user_id => current_user.id,:product_id => product.id),:method => :post, id: "my-button",class:"btn btn-success btn-sm"%></td> 
+          <% if current_user.cart.present?%>
+              <% if current_user.cart.products.include?(product)%>
+                <td> <i><%= link_to 'Add More', insert_carts_path(:user_id => current_user.id,:product_id => product.id,:qty => @qty),:method => :post,class:"btn btn-warning btn-sm",style:"width:100px;"%></i></td></div>
+              <%else%>
+              <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id),:method => :post, id: "my-button",class:"btn btn-success btn-sm",style:"width:100px;"%></td> 
+              <%end%>
+          <%else%>
+            <td><%= link_to 'Add to Cart', insert_carts_path(:user_id => current_user.id,:product_id => product.id),:method => :post, id: "my-button",class:"btn btn-success btn-sm",style:"width:100px;"%></td>
+          <%end%>
         </tr>
         <%end%>
     </tbody>
@@ -69,18 +77,19 @@
   <%= link_to 'Go to Cart', cart_path(current_user),class:"btn btn-success" ,style:"width:550px;margin-left:400px;"%>
 <%else%>
   <table class="table", style="font-family:serif;">
-    <thead>
+   
+ <thead>
       <tr>
         <th scope="col">  </th>
         <th scope="col">Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Stock</th>
+        <th scope="col">Quantity</th>
         <th scope="col">Price    </th>
         <th scope="col">  </th>
         <th scope="col">  </th>
         <th scope="col">  </th>
       </tr>
-    </thead>
+    </thead> 
+
     <tbody>
       <% current_seller.products.each do |product| %>
       <tr>
@@ -88,20 +97,20 @@
               <td><%= image_tag(product.image, class:"image")%></td>  
           <% end %>
         <td><%= product.name %></td>
-        <td><%= product.desc %></td>
-        <td><%= product.quantity %></td>
+       
+        <td>  <%= product.quantity %></td>
         <td>₹<%= product.price %></td> 
         
         <td><%= link_to 'Show', product_path(product) ,class:"btn btn-primary btn-sm"%></td>
         <td><%= link_to 'Update', edit_product_path(product),class:"btn btn-primary btn-sm" %></td>
-        <td><%= button_to  'remove', product_path(product),
+        <td><%= button_to  'Remove', product_path(product),
                 method: :delete,
                 data: { confirm: 'Are you sure?' } ,class:"btn btn-danger btn-sm"%></td> 
       </tr>
     <% end %>
     </tbody>
   </table>
-  <%=link_to 'Add new Product', new_product_path(:seller_id => params[:id]),class: "btn btn-success",style:"margin-left:1100px;" %>
+  <%=link_to 'Add new Product', new_product_path(:seller_id => params[:id]),class: "btn btn-success",style:"margin-left:980px;width:300px" %>
 <%end%>
 <% if flash %>
     <p class="notice text-success mt-4"><%= notice %></p>

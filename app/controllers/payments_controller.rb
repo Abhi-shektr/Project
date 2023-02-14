@@ -33,11 +33,12 @@ class PaymentsController < ApplicationController
                         @order.order_details << @order_details 
                 
                     end
-
+                    
                     @user.cart.products.each do |p|
                         p.quantity=p.quantity - p.req_quantity
                         p.update(req_quantity:1)
                     end
+                    @user.cart.destroy
                     redirect_to orders_path
                 else
                     render cart_path(@user)
