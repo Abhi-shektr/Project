@@ -70,3 +70,15 @@ body {
 .button-color-change.clicked{
     background-color: red;
 }
+
+
+.navbar-brand img {
+    height: 35px;
+    margin-left:20px;
+    border-radius:300px;
+  }
+
+  .btn-secondary {
+    background-color: gray;
+  }
+  

@@ -12,13 +12,17 @@ class AddressesController < ApplicationController
             if @address.save
                 redirect_to user_path(current_user)
             else
-                flash[:alert]=@address.errors.full_messages
+                render new_address_path
                 
             end
         else
             @seller=current_seller
             @address=@seller.address.create(house: params[:address][:house], street: params[:address][:street],city: params[:address][:city],state: params[:address][:state])
-            redirect_to seller_path(current_seller)
+            if @address.save
+                redirect_to seller_path(current_seller)
+            else
+                render new_address_path 
+            end
         end
     end
 

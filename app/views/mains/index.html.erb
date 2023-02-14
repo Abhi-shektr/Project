@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<a class="navbar-brand" href="#"><img class="logo" src="" alt="myStore"></a>
+<div class="navbar-brand" href="#"><img  src="<%= asset_path 'store.png'%>" alt="myStore"></div>
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -26,12 +26,12 @@
           <%end%>
       </ul>
     </div>
-    <% if user_signed_in? %>
+    
       <%= form_tag root_path, method: :get do%>
       <%= text_field_tag :q, params[:q], placeholder: "Search products"%>
       <%= submit_tag "Search",name: nil,class:"btn btn-success"%>
       <%end%>
-    <%end%>
+    
   </div>
   </nav>
 
