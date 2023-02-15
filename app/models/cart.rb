@@ -5,7 +5,6 @@ class Cart < ApplicationRecord
 
   def set_cart
     self.total =0
-    @user=User.find(self.user_id)
     if self.products.present?
       self.products.each do |p|
         self.total=self.total+(p.price*p.req_quantity)

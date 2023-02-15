@@ -6,10 +6,8 @@ class Order < ApplicationRecord
   before_create :set_order
 
   def set_order
-    @user=User.find(self.user_id)
-
-    if @user.cart.present?
-      self.total = @user.cart.total
+    if self.user.cart.present?
+      self.total = self.user.cart.total
     else
       self.total =0   
     end
