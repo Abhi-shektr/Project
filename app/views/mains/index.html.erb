@@ -11,7 +11,7 @@
           <li class="r4"><%= link_to'Home',root_path,class: "nav-link active" %></li>
           <%if user_signed_in?%>
             
-            <li><%= link_to'Products',products_path(current_user), class:"nav-link"%></li>
+            <li><%= link_to'Products',products_path, class:"nav-link"%></li>
             <li ><%= link_to'Orders',orders_path, class: "nav-link"%></li>
             <li ><%= link_to'MyCart',cart_path(current_user), class: "nav-link"%></li>
             <li ><%= link_to'Profile',user_path(current_user), class: "nav-link"%></li>
@@ -47,7 +47,7 @@
       <div class="text-white" style="font-family:serif;text-border-color:black; text-shadow: -1px 1px 0 #000;">
         <h1 class="mb-3 mt-5";"><b>Welcome to myStore online shopping!</b></h1>
         <%if user_signed_in?%>
-          <a  role="button"><%= link_to'Go Shopping',products_path(current_user),class:"btn btn-outline-light btn-lg",style:"width:600px;margin-top:90px;"%></a>
+          <a  role="button"><%= link_to'Go Shopping',products_path,class:"btn btn-outline-light btn-lg",style:"width:600px;margin-top:90px;"%></a>
         <%elsif seller_signed_in?%>
           .
         <%else%>
