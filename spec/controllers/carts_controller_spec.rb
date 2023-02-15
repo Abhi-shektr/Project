@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe CartsController do
     describe '#insert' do
         let(:user) { create(:user) }
-        let!(:cart) { create(:cart,user: user) }
+        let(:cart) { create(:cart,user: user) }
         let(:seller) { create(:seller) }
         let!(:product1) { create(:product, price: 10, req_quantity: 2,seller: seller) }
         let!(:product2) { create(:product, price: 5, req_quantity: 3,seller: seller) }
