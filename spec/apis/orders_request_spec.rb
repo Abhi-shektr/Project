@@ -10,20 +10,20 @@ RSpec.describe "Orders", type: :request do
        allow_any_instance_of(Api::V1::OrdersController).to receive(:doorkeeper_authorize!).and_return(true)
       end
 
-        let!(:user){create(:user)}  
-
+        let!(:user){create(:user,name:"mahesh",email:"mahesh@gmail.com")}  
+        # let!(:token) { generate_access_token_for(user) }
         let(:payment){create(:payment,user:user)}
         let!(:order1){create(:order,user:user,payment:payment)}
 
         it 'returns a success response' do
-             get "/api/v1/orders", params: {id: user.id} 
+             get "/api/v1/orders", params: {id: user.id} #, headers: {:Authorization=> "Bearer x9GidUCkc6GEw419nXX4iCg25mp2RyRkxZW-KtftkzE" }
             expect(response).to have_http_status(200)
           end
   
-          it 'returns all orders of that user' do
+        it 'returns all orders of that user' do
             get "/api/v1/orders", params: {id: user.id} 
-              expect(JSON.parse(response.body).count).to eq(1)
-            end
+            expect(JSON.parse(response.body).count).to eq(1)
+        end
     end
 
     describe 'GET#order_count' do
@@ -34,7 +34,6 @@ RSpec.describe "Orders", type: :request do
         end
 
         let!(:user){create(:user)}
-        # let(:token) { generate_access_token_for(user) }
         let(:seller){create(:seller)}
         let(:payment){create(:payment,user:user)}
         let!(:order1){create(:order,user:user,payment:payment)}

@@ -12,7 +12,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
     end
 
     def index
-        @payments=@user.payments.all
         @cart=@user.cart
         @products=@cart.products        
     end

@@ -85,7 +85,8 @@ gem 'activeadmin'
 gem 'sass-rails'
 gem 'draper'
 gem 'pundit'
-gem 'faker'
 gem "doorkeeper", "~> 5.6"
 gem 'jwt'
 gem 'rails-controller-testing'
+gem 'omniauth-oauth2'
+
