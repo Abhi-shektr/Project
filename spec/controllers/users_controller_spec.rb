@@ -54,3 +54,9 @@ RSpec.describe UsersController do
   end
 
 end
+
+# https://rently.rentlypurple.com/multifamily/properties
+# 
+# https://rently.atlassian.net/jira/software/c/projects/MFM/boards/43?assignee=601b81abcd564b006855db04
+# 
+# https://rently.atlassian.net/wiki/spaces/DEV/pages/1959789592/Dockerize+Setup+2021

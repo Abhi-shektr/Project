@@ -11,12 +11,12 @@ RSpec.describe "Orders", type: :request do
       end
 
         let!(:user){create(:user,name:"mahesh",email:"mahesh@gmail.com")}  
-        # let!(:token) { generate_access_token_for(user) }
+        # let!(:token) { user_access_token(user) }
         let(:payment){create(:payment,user:user)}
         let!(:order1){create(:order,user:user,payment:payment)}
 
         it 'returns a success response' do
-             get "/api/v1/orders", params: {id: user.id} #, headers: {:Authorization=> "Bearer x9GidUCkc6GEw419nXX4iCg25mp2RyRkxZW-KtftkzE" }
+             get "/api/v1/orders", params: {id: user.id} #, headers: {:Authorization=> "Bearer #{token}" }
             expect(response).to have_http_status(200)
           end
   
